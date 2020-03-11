@@ -1,6 +1,6 @@
 # Frontend
 ## Installation
-- install npm
+- install node and npm
 - clone repo
 - npm install
 ## Run
