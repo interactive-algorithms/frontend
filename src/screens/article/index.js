@@ -5,12 +5,27 @@ import "./index.css";
 
 import Navigation from "../../components/navigation";
 import ArticleText from "../../components/article-text";
-import ArticleSort from "../../components/article-sort";
+//import ArticleSort from "../../components/article-sort";
 
+import {useDispatch, useSelector} from 'react-redux'
+
+import {fetchArticle} from 'state/article'
 
 const Article = () => {
 
-	const test = [
+	const dispatch = useDispatch();
+
+	const article = useSelector(state => state.article[3]);
+
+	useEffect(() => {
+		fetchArticle(dispatch, 3);
+	}, [])
+
+	if(!article){
+		return <></>
+	}
+
+	/*const test = [
 		{ type: "h1", content: "This is a h1" },
 		{ type: "p", content: "this is a paragraph" },
 		{ type: "p", content: "this is also a paragraph" },
@@ -31,7 +46,10 @@ const Article = () => {
 				alt: "test img 2"
 			}
 		}
-	];
+	];*/
+
+	const test = article.sections[0].content;
+
 	return (
 		<>
 			<Navigation />
@@ -41,7 +59,7 @@ const Article = () => {
 						<ArticleText objekt={test} />
 					</Col>
 					<Col md className="item">
-						<ArticleSort />
+						{/* <ArticleSort /> */}
 					</Col>
 				</Row>
 			</Container>

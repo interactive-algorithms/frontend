@@ -5,5 +5,5 @@ export default (method, url, body) => {
 			"Content-Type": "application/json",
 		},
 		body
-	});
+	}).then(res => res.json());
 };

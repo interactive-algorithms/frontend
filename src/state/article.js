@@ -35,7 +35,7 @@ export const fetchArticleMetadata = (dispatch) => {
 };
 
 export const fetchArticle = (dispatch, id) => {
-	request("GET", `/articles/${id}`).then((res) => {
+	request("GET", `/articles/${id}`).then(res => {
 		dispatch({
 			type: "ARTICLES/FETCHED_ARTICLE",
 			article: res.article
