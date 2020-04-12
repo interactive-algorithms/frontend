@@ -6,14 +6,14 @@ export default (state = initialState, action) => {
     const temp = {...state};
     switch (action.type) {
         case "ARTICLES/FETCHED_ARTICLES_METADATA":
-            for(const id in action.articles){
-                if(temp[id]){
-                    temp[id] = {
-                        ...temp[id],
-                        ...action.articles[id]
+            for(let i = 0; i < action.articles.length; i++){
+                if(temp[action.articles[i].id]){
+                    temp[action.articles[i].id] = {
+                        ...temp[action.articles[i].id],
+                        ...action.articles[i]
                     }
                 else{
-                    temp[id] = action.articles[id]
+                    temp[action.articles[i].id] = action.articles[i]
                 }
             }
             return temp;
