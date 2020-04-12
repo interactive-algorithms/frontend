@@ -1,18 +1,44 @@
-const initialState = {
+import request from './request'
 
-};
+const initialState = {};
 
 export default (state = initialState, action) => {
+    const temp = {...state};
     switch (action.type) {
-        case "value":
-            // change state and return state
-            break;
-    
+        case "ARTICLES/FETCHED_ARTICLES_METADATA":
+            for(const id in action.articles){
+                if(temp[id]){
+                    temp[id] = {
+                        ...temp[id],
+                        ...action.articles[id]
+                    }
+                else{
+                    temp[id] = action.articles[id]
+                }
+            }
+            return temp;
+        case "ARTICLES/FETCHED_ARTICLE":
+            temp[action.article.id] = action.article;
+            return temp;
         default:
             return state;
     }
 }
 
-export const fetchArticles = (dispatch) => {
-    
+export const fetchArticleMetadata = (dispatch) => {
+    request("GET", "/articles").then((res) => {
+        dispatch({
+            type : "ARTICLES/FETCHED_ARTICLES_METADATA",
+            articles : res.articles
+        })
+    })
+}
+
+export const fetchArticle = (dispatch, id) => {
+    request("GET", `/articles/${id}`).then((res) => {
+        dispatch({
+            type : "ARTICLES/FETCHED_ARTICLE",
+            article : res.article
+        })
+    })
 }
