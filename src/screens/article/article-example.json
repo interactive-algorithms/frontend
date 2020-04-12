@@ -1,0 +1,57 @@
+{
+	title: "the title of the article",
+	TableOfcontent: [
+		{sectionId: 1, sectionTitle: "section 1"},
+		{sectionId: 2, sectionTitle: "section 2"}
+	],
+	sections: [
+		{
+			sectionId: 1,
+			sectionTitle: "Section 1",
+			content: [
+				{type: "h1", content: "this is a h1"},
+				{type: "p", content: "this is a paragraph"},
+				{type: "p", content: "this is also a paragraph"},
+				{type: "img", content: [
+					url: "url to img",
+					alt: "alternate text for an image"
+				]}
+			]
+		},
+		{
+			sectionId: 2,
+			sectionTitle: "Section 2",
+			content: [
+				{type: "h1", content: "this is a h1"},
+				{type: "p", content: "this is a paragraph"},
+				{type: "p", content: "this is also a paragraph"},
+				{type: "img", content: [
+					url: "url to img",
+					alt: "alternate text for an image"
+				]}
+			]
+		}
+	]
+},
+
+{
+	title: "the title of the article",
+	TableOfcontent: [
+		{sectionId: 1, sectionTitle: "section 1"},
+		{sectionId: 2, sectionTitle: "section 2"}
+	]
+},
+
+{
+	sectionId: 1,
+	sectionTitle: "Section 1",
+	content: [
+		{type: "h1", content: "this is a h1"},
+		{type: "p", content: "this is a paragraph"},
+		{type: "p", content: "this is also a paragraph"},
+		{type: "img", content: [
+			url: "url to img",
+			alt: "alternate text for an image"
+		]}
+	]
+}
