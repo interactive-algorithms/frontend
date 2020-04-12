@@ -15,10 +15,10 @@ const Article = () => {
 
 	const dispatch = useDispatch();
 
-	const article = useSelector(state => state.article[3]);
+	const article = useSelector(state => state.article[2]);
 
 	useEffect(() => {
-		fetchArticle(dispatch, 3);
+		fetchArticle(dispatch, 2);
 	}, [])
 
 	if(!article){

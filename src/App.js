@@ -4,6 +4,7 @@ import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 import { Navigation } from "./components/navigation/";
 import Article from "./screens/article/";
+import ChatTest from 'screens/chat-test'
 
 window.SW = window.screen.availWidth;
 window.SH = window.screen.availHeight;
@@ -19,6 +20,9 @@ function App() {
 				</Route>
 				<Route exact path={"/article"}>
 					<Article />
+				</Route>
+				<Route exact path={"/chat-test"}>
+					<ChatTest />
 				</Route>
 			</Switch>
 		</Router>
