@@ -21,6 +21,6 @@
 	"rules": {
 		"indent": ["warn", "tab"],
 		"quotes": ["warn", "double"],
-		"semi": ["error", "always"]
+		"semi": ["warn", "always"]
 	}
 }
