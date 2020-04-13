@@ -29,7 +29,7 @@ export default props => {
     }}>
         <Form.Group>
             <Form.Label>Email</Form.Label>
-            <Form.Control required placeholder="Enter email" onChange={e => setEmail(e.target.value)}/>
+            <Form.Control type={"email"} required placeholder="Enter email" onChange={e => setEmail(e.target.value)}/>
         </Form.Group>
         <Form.Group>
             <Form.Label>Username</Form.Label>

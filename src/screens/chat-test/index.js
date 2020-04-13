@@ -2,18 +2,6 @@ import React, {useState, useEffect} from 'react'
 import Chat from 'components/Chat'
 import request from 'state/request'
 export default props => {
-    const [loggedIn, setLoggedIn] = useState(false);
-    useEffect(() => {
-        request("POST", "/users/login", {
-            username : "test",
-            password : "test"
-        }).then(() => {
-            setLoggedIn(true);
-        })
-    }, [])
-
-    if(!loggedIn) return <></>
-
     return <div>
         <div style={{
             position : "fixed",

@@ -4,12 +4,15 @@ import { Scrollbars } from 'react-custom-scrollbars';
 import {InputGroup, FormControl, Button} from 'react-bootstrap'
 import "./index.css"
 import moment from 'moment'
+import {useSelector} from 'react-redux'
 export default props => {
+    const user = useSelector(state => state.user);
     const [messages, setMessages] = useState([]);
     const [socket, setSocket] = useState(null);
     const inputRef = useRef(null);
     const scrollbar = useRef(null);
     useEffect(() => {
+        if(!user || !user.username) return;
         const socket = io(process.env.REACT_APP_BACKEND_URL + "/messaging");
         setSocket(socket);
         socket.emit("joinSectionChat", props.sectionID);
@@ -33,19 +36,39 @@ export default props => {
         return () => {
             socket.close();
         }
-    }, [])
-    if(!socket) return <></>
+    }, [user])
+
+    const sendMessage = () => {
+        if(!socket) return;
+        if(inputRef.current.value.length > 0) socket.emit("post", inputRef.current.value)
+        setTimeout(() => inputRef.current.value = "",10)
+    }
     return <div style={{
         height : "100%",
         width : "100%",
-        backgroundColor : "#f7f7f7"
+        backgroundColor : "#f7f7f7",
+        position : "relative"
     }}>
-    
-        <Scrollbars ref={scrollbar} style={{
+       {(user && user.username) && <ChatContent inputRef={inputRef} messages={messages} sendMessage={sendMessage} scrollbar={scrollbar}/>}
+       {(!user || !user.username) && <div style={{
+           position : "absolute",
+           margin : "auto",
+           top : 0, bottom : 0, right : 0, left : 0,
+           width : "fit-content",
+           height : "fit-content",
+           color : "#7f7f7f"
+       }}>
+            Login to view section chat
+       </div>} 
+    </div>
+}
+
+const ChatContent = props => {
+    return <><Scrollbars ref={props.scrollbar} style={{
             height : "90%"
         }}>
             {
-                messages.map((message, idx) => {
+                props.messages.map((message, idx) => {
                     return <div key={message.id} style={{
                         width : "90%",
                         marginLeft : "5%",
@@ -77,10 +100,9 @@ export default props => {
             padding: "2% 0",
             flexWrap: "unset"
         }}>
-            <FormControl ref={inputRef} onKeyPress={(e) => {
+            <FormControl ref={props.inputRef} onKeyPress={(e) => {
                 if(!e.shiftKey && e.key=="Enter"){
-                    if(inputRef.current.value.length > 0) socket.emit("post", inputRef.current.value)
-                    setTimeout(() => inputRef.current.value = "", 10)
+                    props.sendMessage()
                 }
                 e.stopPropagation()
             }} as="textarea" style={{
@@ -90,10 +112,9 @@ export default props => {
             }}/>
             <InputGroup.Append>
                 <Button type={"submit"} onClick={() => {
-                    if(inputRef.current.value.length > 0) socket.emit("post", inputRef.current.value)
-                    inputRef.current.value = ""
+                    props.sendMessage()
                 }} variant="outline-secondary" style={{padding : "5px"}}>send</Button>
             </InputGroup.Append>
         </InputGroup>
-    </div>
+    </>
 }
