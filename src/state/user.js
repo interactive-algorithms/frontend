@@ -24,10 +24,13 @@ export const signup = (dispatch, data) => {
 };
 
 export const login = (dispatch, data) => {
-	request("POST", "/users/login", data).then((res) => {
+	return request("POST", "/users/login", data).then((res) => {
 		dispatch({
 			type: "USER/LOGIN",
 			user: res.user
 		});
+		return true;
+	}, res => {
+		return false;
 	});
 };

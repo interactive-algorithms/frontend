@@ -10,6 +10,7 @@ import { Provider } from "react-redux";
 import "bootstrap/dist/css/bootstrap.css";
 
 const store = createStore(reducer);
+window.store = store;
 
 ReactDOM.render(
 	<Provider store={store}>
