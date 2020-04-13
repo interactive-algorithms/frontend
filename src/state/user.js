@@ -19,12 +19,13 @@ export default (state = initialState, action) => {
 };
 
 export const signup = (dispatch, data) => {
-	request("POST", "/users/signup", data).then((res) => {
+	return request("POST", "/users/signup", data).then((res) => {
 		dispatch({
 			type: "USER/SIGNUP",
 			user: res.user
 		});
-	});
+		return true;
+	}, () => false);
 };
 
 export const fetchUser = (dispatch, data) => {

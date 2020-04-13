@@ -2,10 +2,11 @@ import React, {useState} from 'react'
 import {Form, Button} from 'react-bootstrap'
 import {useHistory} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
-import {login} from 'state/user'
+import {signup} from 'state/user'
 export default props => {
-    const [user, setUser] = useState(null);
+    const [username, setUsername] = useState(null);
     const [password, setPassword] = useState(null);
+    const [email, setEmail] = useState(null);
     const history = useHistory();
     const dispatch = useDispatch();
     return <Form style={{
@@ -17,18 +18,22 @@ export default props => {
     }} onSubmit={e => {
         e.stopPropagation();
         e.preventDefault();
-        login(dispatch, {
-            user, password
+        signup(dispatch, {
+            username, password, email
         }).then((success) => {
             if(success) history.push("/")
             else{
-                alert("wrong username/email or password")
+                alert("invalid username, email or password")
             }
         });
     }}>
         <Form.Group>
-            <Form.Label>Email / username</Form.Label>
-            <Form.Control required placeholder="Enter email / username" onChange={e => setUser(e.target.value)}/>
+            <Form.Label>Email</Form.Label>
+            <Form.Control required placeholder="Enter email" onChange={e => setEmail(e.target.value)}/>
+        </Form.Group>
+        <Form.Group>
+            <Form.Label>Username</Form.Label>
+            <Form.Control required placeholder="Enter username" onChange={e => setUsername(e.target.value)}/>
         </Form.Group>
         <Form.Group>
             <Form.Label>Password</Form.Label>
@@ -36,7 +41,7 @@ export default props => {
         </Form.Group>
         <div style={{margin : "auto", width : "fit-content"}}>
             <Button style={{width : "10vw"}} variant="primary" type="submit">
-                Login
+                Signup
             </Button>
         </div>
     </Form>

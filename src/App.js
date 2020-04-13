@@ -6,6 +6,7 @@ import Navigation from "./components/navigation/";
 import Article from "./screens/article/";
 import ChatTest from 'screens/chat-test'
 import Login from 'screens/login'
+import Signup from 'screens/signup'
 
 window.SW = window.screen.availWidth;
 window.SH = window.screen.availHeight;
@@ -21,6 +22,9 @@ function App() {
 				</Route>
 				<Route exact path={"/login"}>
 					<Login/>
+				</Route>
+				<Route exact path={"/signup"}>
+					<Signup/>
 				</Route>
 				<Route exact path={"/article"}>
 					<Article />
