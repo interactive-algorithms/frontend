@@ -9,6 +9,8 @@ export default (state = initialState, action) => {
 			return action.user;
 		case "USER/SIGNUP":
 			return action.user;
+		case "USER/FETCH":
+			return action.user;
 		default:
 			return state;
 	}
@@ -18,6 +20,15 @@ export const signup = (dispatch, data) => {
 	request("POST", "/users/signup", data).then((res) => {
 		dispatch({
 			type: "USER/SIGNUP",
+			user: res.user
+		});
+	});
+};
+
+export const fetchUser = (dispatch, data) => {
+	request("GET", "/users/user").then(res => {
+		dispatch({
+			type: "USER/FETCH",
 			user: res.user
 		});
 	});

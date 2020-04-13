@@ -6,11 +6,14 @@ import * as serviceWorker from "./serviceWorker";
 import reducer from "./state";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
+import { fetchUser } from 'state/user'
 
 import "bootstrap/dist/css/bootstrap.css";
 
 const store = createStore(reducer);
 window.store = store;
+
+fetchUser(store.dispatch);
 
 ReactDOM.render(
 	<Provider store={store}>
