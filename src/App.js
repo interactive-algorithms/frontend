@@ -2,9 +2,10 @@ import React from "react";
 import "./App.css";
 import {BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
-import { Navigation } from "./components/navigation/";
+import Navigation from "./components/navigation/";
 import Article from "./screens/article/";
 import ChatTest from 'screens/chat-test'
+import Login from 'screens/login'
 
 window.SW = window.screen.availWidth;
 window.SH = window.screen.availHeight;
@@ -17,6 +18,9 @@ function App() {
 			<Switch>
 				<Route exact path={"/"}>
 					home
+				</Route>
+				<Route exact path={"/login"}>
+					<Login/>
 				</Route>
 				<Route exact path={"/article"}>
 					<Article />

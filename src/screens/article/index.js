@@ -3,7 +3,6 @@ import { Container, Row, Col } from "react-bootstrap";
 
 import "./index.css";
 
-import Navigation from "../../components/navigation";
 import ArticleText from "../../components/article-text";
 //import ArticleSort from "../../components/article-sort";
 
