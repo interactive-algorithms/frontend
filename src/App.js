@@ -7,6 +7,9 @@ import Article from "./screens/article/";
 import ChatTest from 'screens/chat-test'
 import Login from 'screens/login'
 import Signup from 'screens/signup'
+import Profile from 'screens/profile'
+
+import {useSelector} from 'react-redux'
 
 window.SW = window.screen.availWidth;
 window.SH = window.screen.availHeight;
@@ -32,9 +35,24 @@ function App() {
 				<Route exact path={"/chat-test"}>
 					<ChatTest />
 				</Route>
+				<Route exact path={"/profile"}>
+					<Validate>
+						<Profile />
+					</Validate>
+				</Route>
 			</Switch>
 		</Router>
 	);
+}
+
+const Validate = props => {
+	const user = useSelector(state => state.user);
+	if(!user || !user.username){
+		window.location.pathname = "/login"
+		return <></>
+	}else{
+		return props.children;
+	}
 }
 
 export default App;

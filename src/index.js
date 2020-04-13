@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
@@ -13,11 +13,24 @@ import "bootstrap/dist/css/bootstrap.css";
 const store = createStore(reducer);
 window.store = store;
 
-fetchUser(store.dispatch);
+const LoadingWrapper = props => {
+	const [hasFetched, setHasfetched] = useState(false);
+	useEffect(() => {
+		fetchUser(store.dispatch).then(() => {
+			setHasfetched(true);
+		}, () => {
+			setHasfetched(true);
+		})
+	})
+	if(hasFetched) return props.children;
+	else return "loading..."
+}
 
 ReactDOM.render(
 	<Provider store={store}>
-		<App />
+		<LoadingWrapper>
+			<App />
+		</LoadingWrapper>
 	</Provider>,
 	document.getElementById("root")
 );

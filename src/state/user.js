@@ -11,6 +11,8 @@ export default (state = initialState, action) => {
 			return action.user;
 		case "USER/FETCH":
 			return action.user;
+		case "USER/PATCH":
+			return action.user;
 		case "USER/LOGOUT":
 			return {};
 		default:
@@ -28,14 +30,24 @@ export const signup = (dispatch, data) => {
 	}, () => false);
 };
 
-export const fetchUser = (dispatch, data) => {
-	request("GET", "/users/user").then(res => {
+export const fetchUser = (dispatch) => {
+	return request("GET", "/users/user").then(res => {
 		dispatch({
 			type: "USER/FETCH",
 			user: res.user
 		});
 	});
 };
+
+/*export const patchUser = (dispatch, data) => {
+	return request("PATCH", "/users/user", data).then(res => {
+		dispatch({
+			type: "USER/PATCH",
+			user: res.user
+		});
+		return true;
+	}, () => false);
+};*/
 
 export const login = (dispatch, data) => {
 	return request("POST", "/users/login", data).then((res) => {
