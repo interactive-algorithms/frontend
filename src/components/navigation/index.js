@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import style from "./index.css";
 import {useHistory} from 'react-router-dom'
+import {useSelector, useDispatch} from 'react-redux'
+import { logout } from 'state/user'
 
 //import { NavLink } from "react-router-dom";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
@@ -8,6 +10,8 @@ import { Navbar, Nav, NavDropdown } from "react-bootstrap";
 //https://stackoverflow.com/questions/52992932/component-definition-is-missing-display-name-react-display-name
 export default props => {
 	const history = useHistory();
+	const user = useSelector(state => state.user);
+	const dispatch = useDispatch();
 	return (
 		<Navbar bg="dark" variant="dark" expand="md">
 			<Navbar.Brand href="/">Something</Navbar.Brand>
@@ -26,14 +30,20 @@ export default props => {
 				</Nav>
 				<Nav>
 					<Nav.Link onClick={() => {
-						history.push("/signup")
+						history.push(user.username ? "/profile" : "/signup")
 					}}>
-						Signup
+						{user.username ? user.username : "signup"}
 					</Nav.Link>
 					<Nav.Link onClick={() => {
-						history.push("/login")
+						if(user.username){
+							logout(dispatch).then(() => {
+								history.push("/")
+							})
+						}else{
+							history.push("/login");
+						}
 					}}>
-						Login
+						{user.username ? "logout" : "login"}
 					</Nav.Link>
 				</Nav>
 			</Navbar.Collapse>

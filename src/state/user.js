@@ -11,6 +11,8 @@ export default (state = initialState, action) => {
 			return action.user;
 		case "USER/FETCH":
 			return action.user;
+		case "USER/LOGOUT":
+			return {};
 		default:
 			return state;
 	}
@@ -43,5 +45,13 @@ export const login = (dispatch, data) => {
 		return true;
 	}, res => {
 		return false;
+	});
+};
+
+export const logout = (dispatch) => {
+	return request("POST", "/users/logout").then((res) => {
+		dispatch({
+			type: "USER/LOGOUT"
+		});
 	});
 };
