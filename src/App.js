@@ -13,9 +13,9 @@ function App() {
 	document.getElementsByTagName("html")[0].style.fontSize = window.SW * 0.005;
 	return (
 		<Router>
+			<Navigation />
 			<Switch>
 				<Route exact path={"/"}>
-					<Navigation />
 					home
 				</Route>
 				<Route exact path={"/article"}>

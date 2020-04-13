@@ -52,7 +52,6 @@ const Article = () => {
 
 	return (
 		<>
-			<Navigation />
 			<Container fluid>
 				<Row>
 					<Col md className="item">
