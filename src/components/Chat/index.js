@@ -26,7 +26,7 @@ export default props => {
             }, 100)
         })
         socket.on("new", message => {
-            if(scrollbar.current.getValues().top >= 1){
+            if(scrollbar.current.getValues().top >= 0.99){
                 setTimeout(() => {
                     scrollbar.current.scrollToBottom()
                 }, 100)
