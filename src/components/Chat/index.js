@@ -22,13 +22,13 @@ export default props => {
         socket.on("all", allMessages => {
             setMessages(allMessages);
             setTimeout(() => {
-                scrollbar.current.scrollToBottom()
+                if(scrollbar.current) scrollbar.current.scrollToBottom()
             }, 100)
         })
         socket.on("new", message => {
             if(scrollbar.current.getValues().top >= 0.99){
                 setTimeout(() => {
-                    scrollbar.current.scrollToBottom()
+                    if(scrollbar.current) scrollbar.current.scrollToBottom()
                 }, 100)
             }
             setMessages((messages) => {
@@ -148,10 +148,3 @@ const ChatContent = props => {
         </div>
     </div>
 }
-
-/*onKeyPress={(e) => {
-                if(!e.shiftKey && e.key=="Enter"){
-                    props.sendMessage()
-                }
-                e.stopPropagation()
-            }}*/
