@@ -8,6 +8,8 @@ import ChatTest from 'screens/chat-test'
 import Login from 'screens/login'
 import Signup from 'screens/signup'
 import Profile from 'screens/profile'
+import Articles from 'screens/articles'
+
 
 import {useSelector} from 'react-redux'
 
@@ -29,8 +31,11 @@ function App() {
 				<Route exact path={"/signup"}>
 					<Signup/>
 				</Route>
-				<Route exact path={"/article"}>
-					<Article />
+				<Route exact path={"/articles/:id"}>
+					<Article/>
+				</Route>
+				<Route exact path={"/articles"}>
+					<Articles/>
 				</Route>
 				<Route exact path={"/chat-test"}>
 					<ChatTest />

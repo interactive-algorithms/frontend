@@ -14,10 +14,9 @@ background-color: blue;
 	width: 50%;
 }
 
-.test h1,h2,h3,h4,h5,h6 {
+.test h1, .test h2,.test h3,.test h4,.test h5,.test h6 {
 	margin-left: -15px;
-	border-left: 15px solid rgb(228, 117, 26)!important;
-	
+	border-left: 15px solid rgb(228, 117, 26)!important;	
 }
 
 li {

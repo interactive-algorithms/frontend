@@ -21,8 +21,8 @@ const ArticleText = ({ objekt }) => {
 			return (
 				<>
 					<ul key={index}>
-						{item.content.map((li) => {
-							return <li key={index}>{li}</li>;
+						{item.content.map((li, idx) => {
+							return <li key={idx}>{li}</li>;
 						})}
 					</ul>
 				</>
@@ -31,8 +31,8 @@ const ArticleText = ({ objekt }) => {
 			return (
 				<>
 					<ol key={index}>
-						{item.content.map((li) => {
-							return <li key={index}>{li}</li>;
+						{item.content.map((li, idx) => {
+							return <li key={idx}>{li}</li>;
 						})}
 					</ol>
 				</>

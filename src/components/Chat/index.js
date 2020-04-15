@@ -65,7 +65,8 @@ export default props => {
 
 const ChatContent = props => {
     return <><Scrollbars ref={props.scrollbar} style={{
-            height : "90%"
+            height : "90%",
+            width : "100%"
         }}>
             {
                 props.messages.map((message, idx) => {

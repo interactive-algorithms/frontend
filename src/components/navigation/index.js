@@ -14,19 +14,34 @@ export default props => {
 	const dispatch = useDispatch();
 	return (
 		<Navbar bg="dark" variant="dark" expand="md">
-			<Navbar.Brand href="/">Something</Navbar.Brand>
+			<Navbar.Brand 
+				style={{cursor : "pointer"}}
+				onClick={() => history.push("/")}
+			>
+				Interactive Algorithms
+			</Navbar.Brand>
 			<Navbar.Toggle aria-controls="basic-navbar-nav" />
 			<Navbar.Collapse id="basic-navbar-nav">
 				<Nav className="mr-auto">
-					<Nav.Link href="/">Home</Nav.Link>
-					<Nav.Link href="/article">Article</Nav.Link>
-					<NavDropdown title="Dropdown" id="basic-nav-dropdown">
+					<Nav.Link 
+						style={{cursor : "pointer"}}
+						onClick={() => history.push("/")}
+					>
+						Home
+					</Nav.Link>
+					<Nav.Link 
+						style={{cursor : "pointer"}}
+						onClick={() => history.push("/articles")}
+					>
+						Articles
+					</Nav.Link>
+					{/*<NavDropdown title="Dropdown" id="basic-nav-dropdown">
 						<NavDropdown.Item href="#action/3.1">Action</NavDropdown.Item>
 						<NavDropdown.Item href="#action/3.2">Another action</NavDropdown.Item>
 						<NavDropdown.Item href="#action/3.3">Something</NavDropdown.Item>
 						<NavDropdown.Divider />
 						<NavDropdown.Item href="#action/3.4">Separated link</NavDropdown.Item>
-					</NavDropdown>
+					</NavDropdown>*/}
 				</Nav>
 				<Nav>
 					<Nav.Link onClick={() => {
