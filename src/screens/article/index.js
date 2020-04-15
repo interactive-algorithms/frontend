@@ -5,7 +5,7 @@ import { useParams } from 'react-router-dom'
 
 import "./index.css";
 
-import ArticleText from "../../components/article-text";
+import ArticleText from "../../components/ArticleText";
 import {fetchArticle} from 'state/article'
 import Button from '@material-ui/core/Button';
 
@@ -15,6 +15,9 @@ import CloseIcon from '@material-ui/icons/Close';
 
 import Chat from 'components/Chat'
 import ArticleMenu from 'components/ArticleMenu'
+import { withTheme } from '@material-ui/core/styles';
+
+import { Scrollbars } from 'react-custom-scrollbars';
 
 const isArticleReady = article => {
 	if(!article) return false;
@@ -24,7 +27,7 @@ const isArticleReady = article => {
 	return true;
 }
 
-export default props => {
+export default withTheme(props => {
 
 	const { articleID, sectionID } = useParams();
 
@@ -49,14 +52,31 @@ export default props => {
 			<Container fluid style={{height : "100%", padding : 0}}>
 				<Row noGutters style={{height : "100%"}}>
 					<Col xs={12} md={2} xl={2} className="Article-screen-item" style={{
-						boxShadow : "0px 0px 5px 5px grey"
+						boxShadow : "0px 0px 5px 5px grey",
+						zIndex : "2"
 					}}>
-						<ArticleMenu article={article} activeSection={sectionID}/>
+						<Scrollbars style={{
+							height : "100%",
+							width : "100%"
+						}}>
+							<ArticleMenu article={article} activeSection={sectionID}/>
+						</Scrollbars>
 					</Col>
 					<Col xs={12} md={6} xl={6} className="Article-screen-item" style={{
-						padding : "2rem"
+						backgroundColor : props.theme.palette.secondary.light,
+						color : props.theme.palette.grey[800],
+						padding : "0.1rem"
 					}}>
-						<ArticleText objekt={section.content} />
+						<Scrollbars style={{
+							height : "100%",
+							width : "100%"
+						}}>
+							<div style={{
+								padding : "2rem"
+							}}>
+								<ArticleText content={section.content} />
+							</div>
+						</Scrollbars>
 					</Col>
 					<Col xs={12} md={4} xl={4} className="Article-screen-item">
 						{/* <ArticleSort /> */}
@@ -86,7 +106,7 @@ export default props => {
 			</Fab>
 		</>
 	);
-};
+});
 
 /*
 const test = [

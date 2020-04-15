@@ -31,44 +31,48 @@ const theme = createMuiTheme({
 window.SW = window.screen.availWidth;
 window.SH = window.screen.availHeight;
 
-function App() {
+const App = () => {
 	document.getElementsByTagName("html")[0].style.fontSize = window.SW * 0.005;
 	return (
 		<ThemeProvider theme={theme}>
 			<Router>
-				<Navigation />
 				<div style={{
-					position : "fixed",
-					top : "70px",
-					width : "100vw",
-					height : "calc(100vh - 70px)",	
-					overflow : "auto"
+					color : theme.palette.grey[700]
 				}}>
-				<Switch>
-					<Route exact path={"/"}>
-						home
-					</Route>
-					<Route exact path={"/login"}>
-						<Login/>
-					</Route>
-					<Route exact path={"/signup"}>
-						<Signup/>
-					</Route>
-					<Route exact path={"/articles/:articleID/:sectionID"}>
-						<Article/>
-					</Route>
-					<Route exact path={"/articles"}>
-						<Articles/>
-					</Route>
-					<Route exact path={"/chat-test"}>
-						<ChatTest />
-					</Route>
-					<Route exact path={"/profile"}>
-						<Validate>
-							<Profile />
-						</Validate>
-					</Route>
-				</Switch>
+					<Navigation />
+					<div style={{
+						position : "fixed",
+						top : "70px",
+						width : "100vw",
+						height : "calc(100vh - 70px)",	
+						overflow : "auto"
+					}}>
+					<Switch>
+						<Route exact path={"/"}>
+							home
+						</Route>
+						<Route exact path={"/login"}>
+							<Login/>
+						</Route>
+						<Route exact path={"/signup"}>
+							<Signup/>
+						</Route>
+						<Route exact path={"/articles/:articleID/:sectionID"}>
+							<Article/>
+						</Route>
+						<Route exact path={"/articles"}>
+							<Articles/>
+						</Route>
+						<Route exact path={"/chat-test"}>
+							<ChatTest />
+						</Route>
+						<Route exact path={"/profile"}>
+							<Validate>
+								<Profile />
+							</Validate>
+						</Route>
+					</Switch>
+					</div>
 				</div>
 			</Router>
 		</ThemeProvider>

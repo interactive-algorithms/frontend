@@ -1,0 +1,15 @@
+.ArticleText-container {
+	margin: 15px 0 15px 0;
+	font-size: 20px;
+}
+
+.ArticleText-container img {
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	width: 50%;
+}
+
+.ArticleText-container li {
+	list-style-position: inside;
+}

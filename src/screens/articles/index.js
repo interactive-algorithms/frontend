@@ -4,10 +4,11 @@ import { Container, Row, Col } from "react-bootstrap";
 import {useHistory} from 'react-router-dom'
 
 import { fetchArticleMetadata } from 'state/article'
+import { withTheme } from '@material-ui/core/styles';
 
 import "./index.css"
 
-export default props => {
+export default withTheme(props => {
 	const dispatch = useDispatch();
 
 	const articles = useSelector(state => state.article);
@@ -17,7 +18,7 @@ export default props => {
 	useEffect(() => {
 		fetchArticleMetadata(dispatch);
 	}, [])
-
+	console.log(props.theme)
 	return (
 		<Container style={{
 			padding : "2rem"
@@ -30,12 +31,13 @@ export default props => {
 			{articleList.map((article, idx) => 
 				<Row className={"justify-content-center"} key={article.id}>
 					<Col md={"6"} align={"center"} style={{
-						background : "#e69413",
+						background : props.theme.palette.primary.main,
 						marginTop : "2rem",
 						borderRadius : "10px",
 						padding : "1rem",
 						cursor : "pointer",
-						marginBottom : idx == articleList.length - 1 ? "1rem" : "0rem"
+						marginBottom : idx == articleList.length - 1 ? "1rem" : "0rem",
+						color : props.theme.palette.primary.contrastText
 					}} className={"articles-article-container"} onClick={() => {
 						history.push(`/articles/${article.id}/${article.sections[0].id}`)
 					}}>
@@ -45,4 +47,4 @@ export default props => {
 			)}
 		</Container>
 	);	
-}
+})
