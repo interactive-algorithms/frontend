@@ -28,7 +28,14 @@ export default withTheme(props => {
 		} else if (item.type === "p") {
 			return <p key={index} >{item.content}</p>;
 		} else if (item.type === "img") {
-			return <img key={index} src={`assets/articleImages/${item.url}`} alt={item.alt} />;
+			return <img 
+				key={index} 
+				src={`${window.location.origin}/assets/${item.url}`} 
+				alt={item.alt} 
+				style={{
+					padding : "4rem"
+				}}
+			/>;
 		} else if (item.type === "ul") {
 			return (
 				<ul key={index}>
