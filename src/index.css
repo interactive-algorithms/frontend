@@ -20,3 +20,7 @@ code {
 html, body {
 	height: 100%;
 }
+
+button:focus {
+	outline : none !important;
+}

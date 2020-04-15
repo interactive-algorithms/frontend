@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import {useDispatch, useSelector} from 'react-redux'
 import { useParams } from 'react-router-dom'
@@ -7,6 +7,14 @@ import "./index.css";
 
 import ArticleText from "../../components/article-text";
 import {fetchArticle} from 'state/article'
+import Button from '@material-ui/core/Button';
+
+
+import Fab from '@material-ui/core/Fab';
+import InsertCommentIcon from '@material-ui/icons/InsertComment';
+import CloseIcon from '@material-ui/icons/Close';
+
+import Chat from 'components/Chat'
 
 const isArticleReady = article => {
 	if(!article) return false;
@@ -18,34 +26,60 @@ const isArticleReady = article => {
 
 export default props => {
 
-	const { id } = useParams();
+	const { articleID, sectionID } = useParams();
 
 	const dispatch = useDispatch();
 
-	const article = useSelector(state => state.article[id]);
+	const article = useSelector(state => state.article[articleID]);
+
+	const [showChat, setShowChat] = useState(false);
 
 	useEffect(() => {
-		if(!isArticleReady(article)) fetchArticle(dispatch, id);
+		if(!isArticleReady(article)) fetchArticle(dispatch, articleID);
 	}, [])
 
-	if(!isArticleReady(article)){
+	if(!isArticleReady(article) || article.sections.length <= sectionID){
 		return <></>
 	}
 
-	const test = article.sections[0].content;
+	const test = article.sections[sectionID].content;
 
 	return (
 		<>
-			<Container fluid>
-				<Row>
-					<Col md className="item">
+			<Container fluid style={{height : "100%"}}>
+				<Row style={{height : "100%"}}>
+					<Col xs={12} md={2} xl={1} className="Article-screen-item">
+						navigation
+					</Col>
+					<Col xs={12} md={6} xl={6} className="Article-screen-item">
 						<ArticleText objekt={test} />
 					</Col>
-					<Col md className="item">
+					<Col xs={12} md={4} xl={5} className="Article-screen-item">
 						{/* <ArticleSort /> */}
 					</Col>
 				</Row>
 			</Container>
+			{showChat && <div style={{
+				position : "fixed",
+				bottom : "6rem",
+				right : "2rem",
+				height : "50vh",
+				width : "20vw",
+				boxShadow : "0px 0px 5px 1px grey",
+				borderRadius : "10px",
+				overflow : "hidden"
+			}}>
+				<Chat sectionID={sectionID}/>
+			</div>}
+			<Fab title={showChat ? "close"  : "open chat"} color="primary" aria-label="add" style={{
+				position : "fixed",
+				bottom : "2rem",
+				right : "2rem"
+			}} onClick={() => {
+				setShowChat(!showChat)
+			}}>
+				{showChat ? <CloseIcon/> : <InsertCommentIcon />}
+			</Fab>
 		</>
 	);
 };

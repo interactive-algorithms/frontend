@@ -13,7 +13,13 @@ export default props => {
 	const user = useSelector(state => state.user);
 	const dispatch = useDispatch();
 	return (
-		<Navbar bg="dark" variant="dark" expand="md">
+		<Navbar bg="dark" variant="dark" expand="md" style={{
+			position : "fixed",
+			width : "100vw",
+			minHeight : "70px",
+			top : 0,
+			zIndex : 10
+		}}>
 			<Navbar.Brand 
 				style={{cursor : "pointer"}}
 				onClick={() => history.push("/")}

@@ -10,8 +10,20 @@ import Signup from 'screens/signup'
 import Profile from 'screens/profile'
 import Articles from 'screens/articles'
 
-
 import {useSelector} from 'react-redux'
+import { Scrollbars } from 'react-custom-scrollbars';
+
+import { createMuiTheme } from '@material-ui/core/styles';
+import { ThemeProvider } from '@material-ui/styles';
+import purple from '@material-ui/core/colors/purple';
+
+const theme = createMuiTheme({
+  palette: {
+    primary: {
+		main : "#ffa400"
+	}
+  },
+})
 
 window.SW = window.screen.availWidth;
 window.SH = window.screen.availHeight;
@@ -19,34 +31,44 @@ window.SH = window.screen.availHeight;
 function App() {
 	document.getElementsByTagName("html")[0].style.fontSize = window.SW * 0.005;
 	return (
-		<Router>
-			<Navigation />
-			<Switch>
-				<Route exact path={"/"}>
-					home
-				</Route>
-				<Route exact path={"/login"}>
-					<Login/>
-				</Route>
-				<Route exact path={"/signup"}>
-					<Signup/>
-				</Route>
-				<Route exact path={"/articles/:id"}>
-					<Article/>
-				</Route>
-				<Route exact path={"/articles"}>
-					<Articles/>
-				</Route>
-				<Route exact path={"/chat-test"}>
-					<ChatTest />
-				</Route>
-				<Route exact path={"/profile"}>
-					<Validate>
-						<Profile />
-					</Validate>
-				</Route>
-			</Switch>
-		</Router>
+		<ThemeProvider theme={theme}>
+			<Router>
+				<Navigation />
+				<div style={{
+					position : "fixed",
+					top : "70px",
+					width : "100vw",
+					height : "calc(100vh - 70px)",	
+					overflow : "auto"
+				}}>
+				<Switch>
+					<Route exact path={"/"}>
+						home
+					</Route>
+					<Route exact path={"/login"}>
+						<Login/>
+					</Route>
+					<Route exact path={"/signup"}>
+						<Signup/>
+					</Route>
+					<Route exact path={"/articles/:articleID/:sectionID"}>
+						<Article/>
+					</Route>
+					<Route exact path={"/articles"}>
+						<Articles/>
+					</Route>
+					<Route exact path={"/chat-test"}>
+						<ChatTest />
+					</Route>
+					<Route exact path={"/profile"}>
+						<Validate>
+							<Profile />
+						</Validate>
+					</Route>
+				</Switch>
+				</div>
+			</Router>
+		</ThemeProvider>
 	);
 }
 

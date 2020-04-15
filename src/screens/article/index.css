@@ -1,17 +1,11 @@
-.item {
+.Article-screen-item {
 	overflow: auto;
+	height : 100%;
 }
 
-/*
-.item:last-child {
-	background-color: blue;
-}
-*/
-
-
-
-@media (min-width: 720px) {
-	.item {
-		height: calc(100vh - 56px);
+@media (max-width: 768px) {
+	.Article-screen-item {
+		height : fit-content;
+		overflow : none;
 	}
 }
