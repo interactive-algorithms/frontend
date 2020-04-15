@@ -20,7 +20,10 @@ import purple from '@material-ui/core/colors/purple';
 const theme = createMuiTheme({
   palette: {
     primary: {
-		main : "#ffa400"
+		main : "#009688"
+	},
+	secondary : {
+		main : "#e0f2f1"
 	}
   },
 })

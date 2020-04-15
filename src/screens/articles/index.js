@@ -37,7 +37,7 @@ export default props => {
 						cursor : "pointer",
 						marginBottom : idx == articleList.length - 1 ? "1rem" : "0rem"
 					}} className={"articles-article-container"} onClick={() => {
-						history.push(`/articles/${article.id}/0`)
+						history.push(`/articles/${article.id}/${article.sections[0].id}`)
 					}}>
 						<h4>{article.title}</h4>
 					</Col>

@@ -9,12 +9,12 @@ import ArticleText from "../../components/article-text";
 import {fetchArticle} from 'state/article'
 import Button from '@material-ui/core/Button';
 
-
 import Fab from '@material-ui/core/Fab';
 import InsertCommentIcon from '@material-ui/icons/InsertComment';
 import CloseIcon from '@material-ui/icons/Close';
 
 import Chat from 'components/Chat'
+import ArticleMenu from 'components/ArticleMenu'
 
 const isArticleReady = article => {
 	if(!article) return false;
@@ -38,23 +38,27 @@ export default props => {
 		if(!isArticleReady(article)) fetchArticle(dispatch, articleID);
 	}, [])
 
-	if(!isArticleReady(article) || article.sections.length <= sectionID){
+	if(!isArticleReady(article) || article.sections.length == 0){
 		return <></>
 	}
 
-	const test = article.sections[sectionID].content;
+	const section = article.sections.find(section => section.id == sectionID);
 
 	return (
 		<>
-			<Container fluid style={{height : "100%"}}>
-				<Row style={{height : "100%"}}>
-					<Col xs={12} md={2} xl={1} className="Article-screen-item">
-						navigation
+			<Container fluid style={{height : "100%", padding : 0}}>
+				<Row noGutters style={{height : "100%"}}>
+					<Col xs={12} md={2} xl={2} className="Article-screen-item" style={{
+						boxShadow : "0px 0px 5px 5px grey"
+					}}>
+						<ArticleMenu article={article} activeSection={sectionID}/>
 					</Col>
-					<Col xs={12} md={6} xl={6} className="Article-screen-item">
-						<ArticleText objekt={test} />
+					<Col xs={12} md={6} xl={6} className="Article-screen-item" style={{
+						padding : "2rem"
+					}}>
+						<ArticleText objekt={section.content} />
 					</Col>
-					<Col xs={12} md={4} xl={5} className="Article-screen-item">
+					<Col xs={12} md={4} xl={4} className="Article-screen-item">
 						{/* <ArticleSort /> */}
 					</Col>
 				</Row>

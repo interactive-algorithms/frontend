@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import style from "./index.css";
 import {useHistory} from 'react-router-dom'
 import {useSelector, useDispatch} from 'react-redux'
@@ -18,7 +18,8 @@ export default props => {
 			width : "100vw",
 			minHeight : "70px",
 			top : 0,
-			zIndex : 10
+			zIndex : 10,
+			boxShadow : "0px 0px 2px 1px black"
 		}}>
 			<Navbar.Brand 
 				style={{cursor : "pointer"}}
