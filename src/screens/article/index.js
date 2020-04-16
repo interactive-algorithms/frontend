@@ -19,6 +19,8 @@ import { withTheme } from '@material-ui/core/styles';
 
 import { Scrollbars } from 'react-custom-scrollbars';
 
+import InteractivePicker from 'components/InteractivePicker'
+
 const isArticleReady = article => {
 	if(!article) return false;
 	for(let i = 0; i < article.sections.length; i++){
@@ -79,7 +81,7 @@ export default withTheme(props => {
 						</Scrollbars>
 					</Col>
 					<Col xs={12} md={4} xl={4} className="Article-screen-item">
-						{/* <ArticleSort /> */}
+						<InteractivePicker type={section.interactiveType}/>
 					</Col>
 				</Row>
 			</Container>

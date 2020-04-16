@@ -18,7 +18,6 @@ export default withTheme(props => {
 	useEffect(() => {
 		fetchArticleMetadata(dispatch);
 	}, [])
-	console.log(props.theme)
 	return (
 		<Container style={{
 			padding : "2rem"
