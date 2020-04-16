@@ -39,7 +39,7 @@ export default props => {
         return () => {
             socket.close();
         }
-    }, [user])
+    }, [user, props.sectionID])
 
     const sendMessage = () => {
         if(!socket) return;
