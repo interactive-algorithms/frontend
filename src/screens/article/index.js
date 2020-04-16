@@ -59,7 +59,7 @@ export default withTheme(props => {
 							height : "100%",
 							width : "100%"
 						}}>
-							<ArticleMenu article={article} activeSection={sectionID}/>
+							<ArticleMenu article={article} activeSectionID={sectionID}/>
 						</Scrollbars>
 					</Col>
 					<Col xs={12} md={6} xl={6} className="Article-screen-item" style={{

@@ -27,6 +27,8 @@ export default withTheme(props => {
 			return <h6 style={Hstyle(5)} key={index}>{item.content}</h6>;
 		} else if (item.type === "p") {
 			return <p key={index} >{item.content}</p>;
+		} else if (item.type === "code") {
+			return <div><code key={index} >{item.content}</code></div>;
 		} else if (item.type === "img") {
 			return <img 
 				key={index} 

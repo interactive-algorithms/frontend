@@ -8,7 +8,6 @@ import { withTheme } from '@material-ui/core/styles';
 export default withTheme(props => {
 	const history = useHistory();
 	const article = props.article;
-	console.log(props.theme)
 	return <div style={{
 		backgroundColor : props.theme.palette.primary.dark,
 		height : "100%"
@@ -25,8 +24,10 @@ export default withTheme(props => {
 			<Button key={section.id} 
 				onClick={() => history.push(`/articles/${article.id}/${section.id}`)}
 				style={{
+					boxShadow : section.id == props.activeSectionID ? `0px 0px 0px 2px inset ${props.theme.palette.secondary.main}` : "",
 					borderRadius : "0px",
 					width : "100%",
+					filter : section.id == props.activeSectionID ? "brightness(1)" : "brightness(0.9)"
 				}}
 			>
 				{section.title}
