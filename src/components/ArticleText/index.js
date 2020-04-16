@@ -60,6 +60,10 @@ export default withTheme(props => {
 		}
 	});
 
+	setTimeout(() => {
+		window.MathJax.typeset();
+	}, 3);
+
 	return (
 		<div className="ArticleText-container">
 			{listOfContentElements}
