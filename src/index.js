@@ -24,8 +24,7 @@ const LoadingWrapper = props => {
 				}, () => {
 					setHasfetched(true);
 				});
-				console.log("ye_");
-			}, 5000);
+			}, 1000);
 			return () => clearInterval(interval);
 		}
 	});
