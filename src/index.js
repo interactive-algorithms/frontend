@@ -16,15 +16,22 @@ window.store = store;
 const LoadingWrapper = props => {
 	const [hasFetched, setHasfetched] = useState(false);
 	useEffect(() => {
-		fetchUser(store.dispatch).then(() => {
-			setHasfetched(true);
-		}, () => {
-			setHasfetched(true);
-		})
-	})
-	if(hasFetched) return props.children;
-	else return "loading..."
-}
+		// Check if user is fetch every 5 seconds
+		if (!hasFetched) {
+			const interval = setInterval(() => {
+				fetchUser(store.dispatch).then(() => {
+					setHasfetched(true);
+				}, () => {
+					setHasfetched(true);
+				});
+				console.log("ye_");
+			}, 5000);
+			return () => clearInterval(interval);
+		}
+	});
+	if (hasFetched) return props.children;
+	else return "loading...";
+};
 
 ReactDOM.render(
 	<Provider store={store}>
