@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
@@ -6,11 +6,14 @@ import * as serviceWorker from "./serviceWorker";
 import reducer from "./state";
 import { createStore } from "redux";
 import { Provider } from "react-redux";
-import { fetchUser } from 'state/user'
+import { fetchUser } from "state/user";
 
 import "bootstrap/dist/css/bootstrap.css";
 
-const store = createStore(reducer);
+const store = createStore(
+	reducer,
+	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 window.store = store;
 
 const LoadingWrapper = props => {

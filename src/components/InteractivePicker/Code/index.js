@@ -1,6 +1,6 @@
-import React from 'react'
+import React from "react";
 export default props => {
-    return <div>
-        code {props.problem}
-    </div>
-}
+	return <div>
+		code {props.problem}
+	</div>;
+};

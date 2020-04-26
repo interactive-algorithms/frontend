@@ -1,6 +1,7 @@
-import React from 'react'
+import React from "react";
+
 export default props => {
-    return <div>
-        wdkwmd
-    </div>
-}
+	return <div>
+		wdkwmd
+	</div>;
+};

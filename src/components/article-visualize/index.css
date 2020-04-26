@@ -1,0 +1,22 @@
+/*.yeee {
+	margin: 0;
+	position: absolute;
+	top: 50%;
+	-ms-transform: translateY(-50%);
+	transform: translateY(-50%);
+	height: 95%;
+}*/
+
+.yee {
+	display: block;
+	height: 100%;
+	width: 100%;
+}
+
+.idk {
+	display: inline-block;
+	background-color: blue;
+	width: 20px;
+	border: 1px solid black;
+	vertical-align: sub;
+}
