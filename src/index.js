@@ -16,6 +16,11 @@ window.store = store;
 const LoadingWrapper = props => {
 	const [hasFetched, setHasfetched] = useState(false);
 	useEffect(() => {
+		fetchUser(store.dispatch).then(() => {
+			setHasfetched(true);
+		}, () => {
+			setHasfetched(true);
+		});
 		// Check if user is fetch every 5 seconds
 		if (!hasFetched) {
 			const interval = setInterval(() => {
