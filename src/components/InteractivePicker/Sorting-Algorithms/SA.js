@@ -7,6 +7,7 @@ export default class SortingAlgorithm {
 	constructor(length, isUnique) {
 		this.length = length;
 		this.isUnique = isUnique
+		this.animation = [];
 		this.setup();
 	}
 
@@ -59,6 +60,16 @@ export default class SortingAlgorithm {
 		return new Promise(resolve => setTimeout(resolve, ms));
 	}
 
+	genNextAnimation(newArray, change) {
+		this.animation.push({
+			newArray: [...newArray],
+			change: {
+				compair: change.compair,
+				isSorted: change.isSorted
+			}
+		});
+	}
+
 	draw(array) {
 		console.log("is drawing");
 		return array.map((value, idx) => {
@@ -87,25 +98,49 @@ export class BubbleSort extends SortingAlgorithm {
 		this.draw();
 		this.sort();
 	}
-		
+
 	async sort() {
 
+		//let array = this.array;
+		//let swapped = false;
+		//for (let i = 0; i < this.length - 1; i++) {
+
+		//	for (let j = 0; j < this.length - i - 1; j++) {
+
+		//		if (array[j] > array[j + 1]) {
+		//			let tmp = array[j];
+		//			array[j] = array[j + 1];
+		//			array[j + 1] = tmp;
+
+		//			await this._sleep(1000);
+		//			console.log("done");
+		//			this.array = array;
+		//		}
+		//	}
+		//}
+
 		let array = this.array;
+		let n = this.array.length - 1;
 		let swapped = false;
-		for (let i = 0; i < this.length - 1; i++) {
 
-			for (let j = 0; j < this.length - i - 1; j++) {
+		do {
+			swapped = false;
 
-				if (array[j] > array[j + 1]) {
-					let tmp = array[j];
-					array[j] = array[j + 1];
-					array[j + 1] = tmp;
-
-					await this._sleep(1000);
-					console.log("done");
-					this.array = array;
+			for (let i = 0; i < n; i++) {
+				this.genNextAnimation(
+					[...array],
+					{
+						compair: [i, i + 1],
+						isSorted: []
+					});
+				if (array[i] > array[i + 1]) {
+					[array[i], array[i + 1]] = [array[i + 1], array[i]]
+					swapped = true;
 				}
 			}
-		}
+			n--;
+		} while (swapped);
+		//console.log(this.animation);;
+
 	}
 }
