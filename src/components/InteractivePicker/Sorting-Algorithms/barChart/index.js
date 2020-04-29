@@ -3,6 +3,9 @@ import Bar from "../bar";
 
 
 export default props => {
+
+	console.log(props.change);
+
 	return (
 		<>
 			<div style={{
@@ -14,8 +17,10 @@ export default props => {
 			}}>
 				{props.array.map((value, idx) => {
 					const height = value / props.array.length;
-					return <Bar index={idx} color="red" height={height} />
-				})};
+					const color = (props.change.compair.includes(idx) ? "blue" : "red")
+
+					return <Bar index={idx} color={color} height={height} value={value} />
+				})}
 			</div>
 		</>
 	);

@@ -4,7 +4,7 @@ import { idk, updateArray } from "state/SortingAlgorithm";
 import { SortingAlgorithm, BubbleSort } from "./SA";
 import BarChart from "./barChart";
 
-const test = new BubbleSort(5, true);
+const test = new BubbleSort(10, true);
 test.sort();
 
 
@@ -15,14 +15,24 @@ export default props => {
 
 	const [index, setIndex] = useState(0);
 
+	useEffect(() => {
+		const interval = setInterval(() => {
+			setIndex(index => (test.animation.length > index + 1) ? index + 1 : index);
+		}, 10000);
+		return () => clearInterval(interval);
+	}, []);
+
+	console.log(index);
+
 	return (
-		<div>
-			<BarChart array={test.animation[index]} />
-			<button onClick={setIndex(index => index + 1)}>
-				Activate
-			</button>
-		</div>
+		<>
+			<BarChart array={test.animation[index].newArray} change={test.animation[index].change} />
+		</>
 	);
+
+	//<button onClick={activateLasers}>
+	//	Activate Lasers
+	//</button>
 
 	//const dispatch = useDispatch();
 	//const ye = useSelector(state => state.sortingAlgorithm);
