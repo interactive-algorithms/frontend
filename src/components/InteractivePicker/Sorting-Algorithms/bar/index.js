@@ -2,14 +2,13 @@ import React from "react";
 export default props => {
 
 	return (
-		<div key={props.height} style={{
-			transition: "transform 1s",
+		<div style={{
+			transition: "all 2s",
 			backgroundColor: props.color,
-			height: `${props.height * 100}%`,
-			width: "10px",
 			display: "inline-block",
-			color: "white"
-		}}>
-		</div>
+			color: "white",
+			position : "absolute",
+			...props.style
+		}}/>
 	)
 };
