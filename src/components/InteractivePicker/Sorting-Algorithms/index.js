@@ -1,28 +1,32 @@
 import React, { useState, useEffect } from "react";
-//import { useDispatch, useSelector } from "react-redux";
-import { idk, updateArray } from "state/SortingAlgorithm";
+import { useDispatch, useSelector } from "react-redux";
+import { idk, updateArray, newSort } from "state/SortingAlgorithm";
 import { SortingAlgorithm, BubbleSort } from "./SA";
 import BarChart from "./barChart";
 
 const test = new BubbleSort(10, true);
 test.sort();
 
-
 export default props => {
 
+	const dispatch = useDispatch();
+	const SA = useSelector(state => state.sortingAlgorithm);
 
-	console.log(test.animation);
+
+	useEffect(() => {
+		newSort(dispatch, test)
+	}, []);
 
 	const [index, setIndex] = useState(0);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
 			setIndex(index => (test.animation.length > index + 1) ? index + 1 : index);
-		}, 10000);
+		}, 100);
 		return () => clearInterval(interval);
 	}, []);
 
-	console.log(index);
+	//console.log(index);
 
 	return (
 		<>

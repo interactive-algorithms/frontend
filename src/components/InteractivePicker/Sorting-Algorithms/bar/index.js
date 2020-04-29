@@ -6,7 +6,8 @@ export default props => {
 			transition: "transform 1s",
 			backgroundColor: props.color,
 			height: `${props.height * 100}%`,
-			width: "10px",
+			minWidth: "1px",
+			flex: "1",
 			display: "inline-block",
 			color: "white"
 		}}>
