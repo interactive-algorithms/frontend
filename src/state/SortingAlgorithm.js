@@ -10,7 +10,7 @@ export default (state = [], action) => {
 		case "NEW_OBJECT":
 			return action.payload;
 		case "INCREMENT":
-			return state.;
+			return state.payload;
 		default:
 			return state;
 	}

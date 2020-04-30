@@ -3,34 +3,36 @@ import { useDispatch, useSelector } from "react-redux";
 import { idk, updateArray, newSort } from "state/SortingAlgorithm";
 import { SortingAlgorithm, BubbleSort } from "./SA";
 import BarChart from "./barChart";
+import ControlePanel from "./controlPanel";
 
 const test = new BubbleSort(10, true);
 test.sort();
 
 export default props => {
 
-	const dispatch = useDispatch();
-	const SA = useSelector(state => state.sortingAlgorithm);
+	//const dispatch = useDispatch();
+	//const SA = useSelector(state => state.sortingAlgorithm);
 
-
-	useEffect(() => {
-		newSort(dispatch, test)
-	}, []);
 
 	const [index, setIndex] = useState(0);
+	const [play, setPlay] = useState(false);
+	const [speed, setSpeed] = useState(10);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			setIndex(index => (test.animation.length > index + 1) ? index + 1 : index);
-		}, 100);
+			if (play) {
+				setIndex(index => (test.animation.length > index + 1) ? index + 1 : index);
+			}
+		}, speed * 100);
 		return () => clearInterval(interval);
-	}, []);
+	}, [play, speed]);
 
 	//console.log(index);
 
 	return (
 		<>
 			<BarChart array={test.animation[index].newArray} change={test.animation[index].change} />
+			<ControlePanel onPlay={() => setPlay(!play)} play={play}/>
 		</>
 	);
 
