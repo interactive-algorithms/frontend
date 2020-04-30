@@ -4,9 +4,9 @@ import { idk, updateArray, newSort } from "state/SortingAlgorithm";
 import { SortingAlgorithm, BubbleSort } from "./SA";
 import BarChart from "./barChart";
 import ControlePanel from "./controlPanel";
+import FormLabel from '@material-ui/core/FormLabel';
 
-const test = new BubbleSort(10, true);
-test.sort();
+
 
 export default props => {
 
@@ -14,9 +14,28 @@ export default props => {
 	//const SA = useSelector(state => state.sortingAlgorithm);
 
 
+
+
+
 	const [index, setIndex] = useState(0);
 	const [play, setPlay] = useState(false);
 	const [speed, setSpeed] = useState(10);
+	const [size, setSize] = useState(10);
+	const [isUnique, setIsUnique] = useState(true);
+	const [test, setTest] = useState(null);
+
+	useEffect(() => {
+		const bubble= new BubbleSort(10, true);
+		setTest(bubble);
+		bubble.sort();
+	}, []);
+
+	useEffect(() => {
+		const bubble = new BubbleSort(size, isUnique);
+		setTest(bubble);
+		bubble.sort();
+		setIndex(0);
+	}, [size, isUnique]);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -27,12 +46,35 @@ export default props => {
 		return () => clearInterval(interval);
 	}, [play, speed]);
 
-	//console.log(index);
+	const goBack = () => {
+		setPlay(false);
+		if (index !== 0) {
+			setIndex(index - 1);
+		}
+	}
+
+	const goForward = () => {
+		setPlay(false);
+		if (index !== test.animation.length - 1) {
+			setIndex(index + 1);
+		}
+	}
+
+	const goUnique = () => {
+		setPlay(false);
+		setIsUnique(!isUnique)
+	}
+
+	const cangeSize = (event, value) => {
+		setSize(value);
+	}
 
 	return (
 		<>
-			<BarChart array={test.animation[index].newArray} change={test.animation[index].change} />
-			<ControlePanel onPlay={() => setPlay(!play)} play={play}/>
+			{(test !== null) ? <>
+				<BarChart array={test.animation[index].newArray} change={test.animation[index].change} />
+				<ControlePanel onPlay={() => setPlay(!play)} play={play} onBack={goBack} onForward={goForward} isUnique={isUnique} onUnique={goUnique} size={size} getSize={cangeSize} />
+			</> : ""}
 		</>
 	);
 
