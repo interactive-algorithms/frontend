@@ -27,8 +27,7 @@ export default props => {
 				height: "80%",
 				display: "flex",
 				alignItems: "flex-end",
-				justifyContent: "space-around",
-				flex: 1
+				justifyContent: "space-around"
 			}}>
 				{props.array.map((value, idx) => {
 					const height = value / props.array.length;

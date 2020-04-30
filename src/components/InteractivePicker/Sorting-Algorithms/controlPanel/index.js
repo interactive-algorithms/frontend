@@ -38,12 +38,25 @@ export default props => {
 				defaultValue={10}
 				aria-labelledby="discrete-slider"
 				valueLabelDisplay="auto"
-				onChange={props.getSize}
+				onChange={props.setSize}
 				value={props.size}
 				step={10}
 				marks
 				min={10}
-				max={30}
+				max={200}
+			/>
+			<Typography id="discrete-slider" gutterBottom>
+				Speed
+						</Typography>
+			<Slider
+				defaultValue={10}
+				aria-labelledby="discrete-slider"
+				valueLabelDisplay="auto"
+				onChange={props.setSpeed}
+				value={props.speed}
+				step={1}
+				min={1}
+				max={1000}
 			/>
 		</>
 	);

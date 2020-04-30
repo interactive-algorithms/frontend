@@ -9,8 +9,9 @@ export default props => {
 			minWidth: "1px",
 			flex: "1",
 			display: "inline-block",
-			color: "white"
+			color: "white",
+			margin: "1px"
 		}}>
-		</div>
+		</div >
 	)
 };

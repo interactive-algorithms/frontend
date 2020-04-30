@@ -42,7 +42,7 @@ export default props => {
 			if (play) {
 				setIndex(index => (test.animation.length > index + 1) ? index + 1 : index);
 			}
-		}, speed * 100);
+		}, 1000 - speed);
 		return () => clearInterval(interval);
 	}, [play, speed]);
 
@@ -65,15 +65,19 @@ export default props => {
 		setIsUnique(!isUnique)
 	}
 
-	const cangeSize = (event, value) => {
+	const changeSize = (event, value) => {
 		setSize(value);
+	}
+
+	const changeSpeed= (event, value) => {
+		setSpeed(value);
 	}
 
 	return (
 		<>
 			{(test !== null) ? <>
 				<BarChart array={test.animation[index].newArray} change={test.animation[index].change} />
-				<ControlePanel onPlay={() => setPlay(!play)} play={play} onBack={goBack} onForward={goForward} isUnique={isUnique} onUnique={goUnique} size={size} getSize={cangeSize} />
+				<ControlePanel onPlay={() => setPlay(!play)} play={play} onBack={goBack} onForward={goForward} isUnique={isUnique} onUnique={goUnique} size={size} setSize={changeSize} speed={speed} setSpeed={changeSpeed} />
 			</> : ""}
 		</>
 	);
