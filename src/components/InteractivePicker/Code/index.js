@@ -11,6 +11,9 @@ import {Table, Spinner} from 'react-bootstrap'
 
 import { Scrollbars } from "react-custom-scrollbars";
 
+import Popover from '@material-ui/core/Popover';
+import Typography from '@material-ui/core/Typography';
+
 const getProblem = name => {
 	switch (name) {
 		case "algorithmicwalk":
@@ -41,9 +44,7 @@ const getProblem = name => {
 					let n = input.n;
 					let x = input.x;
 					let y = input.y;
-					let res;
-					eval(`res = ${code}()`)
-					return res;
+					return eval(`${code}()`)
 				}
 			}
 		default:
@@ -75,16 +76,46 @@ const getProblem = name => {
 
 const executeCode = (code, problem) => {
 	return new Promise((resolve, reject) => {
-		const res = []
+		const promises = []
 		for(let i = 0; i < problem.testdata.length; i++){
 			const input = problem.testdata[i].input;
 			const output = problem.testdata[i].output;
-			const codeResult = problem.function(input, code);
-			res.push({
-				correct : JSON.stringify(codeResult) === JSON.stringify(output)
-			})
+			promises.push(new Promise((resolve2, reject2) => {
+				let didFinish = false;
+				const executionThread = document.createElement("iframe");
+				document.body.appendChild(executionThread)
+				executionThread.contentWindow.run = problem.function;
+				executionThread.contentWindow.run(input, code);
+				executionThread.remove();
+				const timeout = setTimeout(() => {
+					try{
+						const codeResult = problem.function(input, code);
+						didFinish = true;
+						resolve2({
+							correct : JSON.stringify(codeResult) === JSON.stringify(output)
+						})
+					}catch(e){
+						didFinish = true;
+						resolve2({
+							error : e.message
+						})
+					}
+				}, 0)
+				setTimeout(() => {
+					console.log("jwdnjwndjwd")
+					clearTimeout(timeout)
+					if(!didFinish){
+						resolve2({
+							error : "Time limit exceeded"
+						})
+					}
+				}, 100)
+			}))
 		}
-		resolve(res)
+		Promise.all(promises).then((res) => {
+			console.log(res)
+			resolve(res)
+		})
 	})
 }
 
@@ -95,8 +126,15 @@ export default props => {
 	const [results, setResults] = useState(null);
 	const [isExecuting, setIsExecuting] = useState(false);
 
+	const [activeErrorMessageElement, setActiveErrorMessageElement] = useState(null);
+	const [activeError, setActiveError] = useState("");
+
 	const amountOfCorrect = results ? results.reduce((total, result) => total + result.correct, 0) : -1;
-	console.log(isExecuting)
+
+	const testColor = results ? 
+		`rgb(${200 - amountOfCorrect / results.length * 100} ${255 - (100 - amountOfCorrect / results.length * 100)} 150)`
+		: "unset";
+
 	return <div style={{
 		textAlign : "center",
 		padding : "2rem",
@@ -161,20 +199,20 @@ export default props => {
 			}
 		/>
 		{results && <div style={{
-			backgroundColor : 
-				`rgb(${255 - amountOfCorrect / results.length * 100} ${255 - (100 - amountOfCorrect / results.length * 100)} 150)`,
+			backgroundColor : !amountOfCorrect && amountOfCorrect != 0 ? "rgb(255, 115, 107)" : testColor,
 			borderRadius : "1rem",
 			marginTop : "1rem"
 		}}>
 			<p>
-				Code execution results: {amountOfCorrect} / {results.length}
+				Code execution results: {amountOfCorrect || 0} / {results.length}
 			</p>
 		</div>}
 		{results && <Scrollbars style={{
 			height: "30%"
 		}}>
 			<Table striped bordered hover size="sm" responsive="sm" style={{
-				height : "20%"
+				height : "20%",
+				position : "relative"
 			}}>
 				<thead>
 					<tr>
@@ -182,14 +220,26 @@ export default props => {
 						<th>Result</th>
 					</tr>
 				</thead>
-				<tbody>
+				<tbody style={{
+							position : "relative"
+						}}>
 				{
-					results.map((result, idx) => <tr style={{
-						backgroundColor : 
-							`rgb(${255 - amountOfCorrect / results.length * 100} ${255 - (100 - amountOfCorrect / results.length * 100)} 150)`,
+					results.map((result, idx) => <tr key={idx} style={{
+						backgroundColor : result.error ? "rgb(255, 115, 107)" : testColor,
+						cursor : result.error ? "pointer" : "unset"
 					}}>
 						<td>Test case {idx + 1}</td>
-						<td>{result.correct ? "accepted" : "failed"}</td>
+						<td 
+							onClick={e => {
+								if(result.error){
+									e.stopPropagation();
+									setActiveErrorMessageElement(e.currentTarget)
+									setActiveError(result.error)
+								}
+							}}
+						>
+							{result.error ? "Error" : (result.correct ? "Accepted" : "Wrong Answer")}
+						</td>
 					</tr>)
 				}
 				</tbody>
@@ -208,5 +258,26 @@ export default props => {
 		}}>
 			{!isExecuting ? "Run Code" : <Spinner animation="border" />}
 		</Button>
+		<Popover
+			open={Boolean(activeErrorMessageElement)}
+			anchorEl={activeErrorMessageElement}
+			onClose={() => setActiveErrorMessageElement(null)}
+			anchorOrigin={{
+				vertical: 'bottom',
+				horizontal: 'center',
+			}}
+			transformOrigin={{
+				vertical: 'top',
+				horizontal: 'center',
+			}}
+		>
+			<div style={{
+				padding : "1rem"
+			}}>
+				<strong>Error</strong><br/>
+				<Typography>{activeError}</Typography>
+			</div>
+		</Popover>
 	</div>;
 };
+
