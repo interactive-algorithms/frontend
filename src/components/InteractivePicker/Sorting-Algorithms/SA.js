@@ -76,37 +76,12 @@ export default class SortingAlgorithm {
 			}
 		});
 	}
-
-	draw(array) {
-		console.log("is drawing");
-		return array.map((value, idx) => {
-			//return array.map((value, idx) => {
-
-			const height = value / this.length;
-
-			return (
-				<div key={idx} style={{
-					backgroundColor: "red",
-					//height: `${height}%`,
-					height: `${height * 100}%`,
-					width: "10px",
-					display: "inline-block",
-					//border: "1px solid black",
-					color: "white"
-				}}>{value}</div>
-			);
-		});
-	}
 }
 
 
 export class BubbleSort extends SortingAlgorithm {
-	animate() {
-		this.draw();
-		this.sort();
-	}
 
-	async sort() {
+	sort() {
 
 		//let array = this.array;
 		//let swapped = false;
@@ -130,6 +105,8 @@ export class BubbleSort extends SortingAlgorithm {
 		let n = this.array.length - 1;
 		let swapped = false;
 
+		const sortedElements = []
+
 		do {
 			swapped = false;
 
@@ -138,7 +115,7 @@ export class BubbleSort extends SortingAlgorithm {
 					[...array],
 					{
 						compair: [i, i + 1],
-						isSorted: []
+						isSorted: [...sortedElements]
 					});
 				if (array[i].value > array[i + 1].value) {
 					[array[i], array[i + 1]] = [array[i + 1], array[i]]
@@ -148,7 +125,7 @@ export class BubbleSort extends SortingAlgorithm {
 					[...array],
 					{
 						compair: [],
-						isSorted: []
+						isSorted: [...sortedElements]
 					});
 
 				// Addes the check animation so the last to "bars" is in order
@@ -162,6 +139,7 @@ export class BubbleSort extends SortingAlgorithm {
 
 				//}
 			}
+			sortedElements.push(array[n].id);
 			n--;
 		} while (swapped);
 
@@ -170,7 +148,7 @@ export class BubbleSort extends SortingAlgorithm {
 			[...array],
 			{
 				compair: [],
-				isSorted: []
+				isSorted: array.map((value) => value.id)
 			});
 		//console.log(this.animation);;
 

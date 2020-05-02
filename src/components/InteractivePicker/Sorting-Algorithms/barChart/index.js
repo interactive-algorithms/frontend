@@ -42,17 +42,18 @@ export default props => {
 					const idx = value.idx;
 					if (props.change.compair.includes(idx)) {
 						color = "blue";
-					} else if (props.change.isSorted.includes(idx)) {
-						color = "orange";
+					} else if (props.change.isSorted.includes(value.id)) {
+						color = "green";
 					}
 					return <Bar 
 						key={value.id}
+						speed={props.speed}
 						color={color}
 						value={value.value}
 						style={{
 							height: `${height * 100}%`,
-							width: `${100 / props.array.length}%`,
-							left : `${idx / props.array.length * 100}%`,
+							width: `${80 / props.array.length}%`,
+							left : `${10 / array.length + idx / props.array.length * 100}%`,
 							bottom : 0,
 						}}
 					/>

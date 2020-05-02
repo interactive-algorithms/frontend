@@ -19,14 +19,6 @@ export default props => {
 	const [test, setTest] = useState(null);
 	const [genNew, setGenNew] = useState(false);
 
-	console.log(test)
-
-	useEffect(() => {
-		const bubble = new BubbleSort(10, true);
-		setTest(bubble);
-		bubble.sort();
-	}, []);
-
 	useEffect(() => {
 		const bubble = new BubbleSort(size, isUnique);
 		setTest(bubble);
@@ -75,7 +67,7 @@ export default props => {
 			{(test !== null) ? <>
 				<div className="rename">
 					<ControlePanel onPlay={() => setPlay(!play)} play={play} onBack={goBack} onForward={goForward} isUnique={isUnique} onUnique={goUnique} size={size} setSize={changeSize} speed={speed} setSpeed={changeSpeed} genNew={() => setGenNew(!genNew)} />
-					<BarChart array={test.animation[index].newArray} change={test.animation[index].change} />
+					<BarChart array={test.animation[index].newArray} change={test.animation[index].change} speed={speed} />
 				</div>
 			</> : ""}
 		</>

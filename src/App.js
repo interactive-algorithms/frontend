@@ -9,6 +9,7 @@ import Login from 'screens/login'
 import Signup from 'screens/signup'
 import Profile from 'screens/profile'
 import Articles from 'screens/articles'
+import Home from 'screens/home'
 
 import {useSelector} from 'react-redux'
 import { Scrollbars } from 'react-custom-scrollbars';
@@ -49,7 +50,7 @@ const App = () => {
 					}}>
 					<Switch>
 						<Route exact path={"/"}>
-							home
+							<Home />
 						</Route>
 						<Route exact path={"/login"}>
 							<Login/>
