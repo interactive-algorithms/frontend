@@ -38,7 +38,7 @@ export default class SortingAlgorithm {
 	_randomArray() {
 		return [...new Array(this.length)]
 			.map((_, idx) => ({
-				value : Math.round(Math.random() * this.length),
+				value : Math.ceil(Math.random() * this.length),
 				id : idx
 			}));
 	}
