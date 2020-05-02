@@ -7,6 +7,10 @@ import "ace-builds/src-noconflict/theme-tomorrow";
 
 import Button from '@material-ui/core/Button';
 
+import {Table, Spinner} from 'react-bootstrap'
+
+import { Scrollbars } from "react-custom-scrollbars";
+
 const getProblem = name => {
 	switch (name) {
 		case "algorithmicwalk":
@@ -88,11 +92,11 @@ export default props => {
 	const problem = getProblem(props.problem)
 
 	const [code, setCode] = useState("");
-	const [results, setResults] = useState("");
+	const [results, setResults] = useState(null);
 	const [isExecuting, setIsExecuting] = useState(false);
 
 	const amountOfCorrect = results ? results.reduce((total, result) => total + result.correct, 0) : -1;
-
+	console.log(isExecuting)
 	return <div style={{
 		textAlign : "center",
 		padding : "2rem",
@@ -157,28 +161,52 @@ export default props => {
 			}
 		/>
 		{results && <div style={{
-			backgroundColor : `rgb(${255 - amountOfCorrect / results.length} 255 150)`
+			backgroundColor : 
+				`rgb(${255 - amountOfCorrect / results.length * 100} ${255 - (100 - amountOfCorrect / results.length * 100)} 150)`,
+			borderRadius : "1rem",
+			marginTop : "1rem"
 		}}>
 			<p>
 				Code execution results: {amountOfCorrect} / {results.length}
 			</p>
-			<div>
-				{
-					//results.map(result => )
-				}
-			</div>
-		</div>
-		}	
-		<Button variant="contained" style={{marginTop : "1rem"}} color="primary" onClick={() => {
-			setIsExecuting(true)
-			executeCode(`(()=>{
-					${code}
-			})`, problem).then((res) => {
-				setResults(res)
-				setIsExecuting(false)
-			})
+		</div>}
+		{results && <Scrollbars style={{
+			height: "30%"
 		}}>
-			Run Code
+			<Table striped bordered hover size="sm" responsive="sm" style={{
+				height : "20%"
+			}}>
+				<thead>
+					<tr>
+						<th>Test case</th>
+						<th>Result</th>
+					</tr>
+				</thead>
+				<tbody>
+				{
+					results.map((result, idx) => <tr style={{
+						backgroundColor : 
+							`rgb(${255 - amountOfCorrect / results.length * 100} ${255 - (100 - amountOfCorrect / results.length * 100)} 150)`,
+					}}>
+						<td>Test case {idx + 1}</td>
+						<td>{result.correct ? "accepted" : "failed"}</td>
+					</tr>)
+				}
+				</tbody>
+			</Table>
+		</Scrollbars>}
+		<Button variant="contained" style={{margin : "1rem 0px"}} color="primary" onClick={async () => {
+			setIsExecuting(true)
+			setTimeout(() => {
+				const res = executeCode(`(()=>{
+						${code}
+				})`, problem).then(res => {
+					setResults(res)
+					setIsExecuting(false)
+				})
+			},0)
+		}}>
+			{!isExecuting ? "Run Code" : <Spinner animation="border" />}
 		</Button>
 	</div>;
 };
