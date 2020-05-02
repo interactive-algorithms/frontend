@@ -139,7 +139,7 @@ export default props => {
 			showGutter={true}
 			name={"middlecode"}
 			defaultValue={
-			`	// return [[]]`
+			`// return [[]]`
 			}
 			style={{
 				maxHeight:"25%"

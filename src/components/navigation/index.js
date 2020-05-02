@@ -6,12 +6,14 @@ import { logout } from 'state/user'
 
 //import { NavLink } from "react-router-dom";
 import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { withTheme } from '@material-ui/core/styles';
 
 //https://stackoverflow.com/questions/52992932/component-definition-is-missing-display-name-react-display-name
-export default props => {
+export default withTheme(props => {
 	const history = useHistory();
 	const user = useSelector(state => state.user);
 	const dispatch = useDispatch();
+	console.log("theme ",props.theme);
 	return (
 		<Navbar bg="dark" variant="dark" expand="md" style={{
 			position : "fixed",
@@ -22,7 +24,7 @@ export default props => {
 			boxShadow : "0px 0px 2px 1px black"
 		}}>
 			<Navbar.Brand 
-				style={{cursor : "pointer"}}
+				style={{cursor : "pointer", color: props.theme.palette.primary.main}}
 				onClick={() => history.push("/")}
 			>
 				Interactive Algorithms
@@ -31,13 +33,13 @@ export default props => {
 			<Navbar.Collapse id="basic-navbar-nav">
 				<Nav className="mr-auto">
 					<Nav.Link 
-						style={{cursor : "pointer"}}
+						style={{cursor : "pointer", color: props.theme.palette.secondary.main}}
 						onClick={() => history.push("/")}
 					>
 						Home
 					</Nav.Link>
 					<Nav.Link 
-						style={{cursor : "pointer"}}
+						style={{cursor : "pointer", color: props.theme.palette.secondary.main}}
 						onClick={() => history.push("/articles")}
 					>
 						Articles
@@ -51,12 +53,12 @@ export default props => {
 					</NavDropdown>*/}
 				</Nav>
 				<Nav>
-					<Nav.Link onClick={() => {
+					<Nav.Link style={{color: props.theme.palette.secondary.main}} onClick={() => {
 						history.push(user.username ? "/profile" : "/signup")
 					}}>
 						{user.username ? user.username : "signup"}
 					</Nav.Link>
-					<Nav.Link onClick={() => {
+					<Nav.Link style={{color: props.theme.palette.secondary.main}} onClick={() => {
 						if(user.username){
 							logout(dispatch).then(() => {
 								history.push("/")
@@ -71,4 +73,4 @@ export default props => {
 			</Navbar.Collapse>
 		</Navbar>
 	);
-}
+})
