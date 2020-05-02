@@ -1,0 +1,18 @@
+.container {
+	overflow: hidden;
+	/*background-color: green;
+	text-align: center;*/
+}
+
+.isUnique {
+}
+
+.MuiButtonBase-root {
+	padding: 48px;
+}
+
+.west {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

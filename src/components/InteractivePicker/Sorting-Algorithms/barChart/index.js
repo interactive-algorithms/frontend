@@ -24,7 +24,6 @@ export default props => {
 		<>
 			<div style={{
 				width: "100%",
-				height: "80%",
 				display: "flex",
 				alignItems: "flex-end",
 				justifyContent: "space-around"

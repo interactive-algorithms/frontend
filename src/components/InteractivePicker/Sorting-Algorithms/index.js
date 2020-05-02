@@ -5,8 +5,9 @@ import { SortingAlgorithm, BubbleSort } from "./SA";
 import BarChart from "./barChart";
 import ControlePanel from "./controlPanel";
 import FormLabel from '@material-ui/core/FormLabel';
+import Grid from '@material-ui/core/Grid';
 
-
+import "./index.css";
 
 export default props => {
 
@@ -23,9 +24,10 @@ export default props => {
 	const [size, setSize] = useState(10);
 	const [isUnique, setIsUnique] = useState(true);
 	const [test, setTest] = useState(null);
+	const [genNew, setGenNew] = useState(false);
 
 	useEffect(() => {
-		const bubble= new BubbleSort(10, true);
+		const bubble = new BubbleSort(10, true);
 		setTest(bubble);
 		bubble.sort();
 	}, []);
@@ -35,7 +37,7 @@ export default props => {
 		setTest(bubble);
 		bubble.sort();
 		setIndex(0);
-	}, [size, isUnique]);
+	}, [size, isUnique, genNew]);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
@@ -69,15 +71,17 @@ export default props => {
 		setSize(value);
 	}
 
-	const changeSpeed= (event, value) => {
+	const changeSpeed = (event, value) => {
 		setSpeed(value);
 	}
 
 	return (
 		<>
 			{(test !== null) ? <>
-				<BarChart array={test.animation[index].newArray} change={test.animation[index].change} />
-				<ControlePanel onPlay={() => setPlay(!play)} play={play} onBack={goBack} onForward={goForward} isUnique={isUnique} onUnique={goUnique} size={size} setSize={changeSize} speed={speed} setSpeed={changeSpeed} />
+				<div className="rename">
+					<ControlePanel onPlay={() => setPlay(!play)} play={play} onBack={goBack} onForward={goForward} isUnique={isUnique} onUnique={goUnique} size={size} setSize={changeSize} speed={speed} setSpeed={changeSpeed} genNew={() => setGenNew(!genNew)} />
+					<BarChart array={test.animation[index].newArray} change={test.animation[index].change} />
+				</div>
 			</> : ""}
 		</>
 	);

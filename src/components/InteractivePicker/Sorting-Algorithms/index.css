@@ -1,0 +1,9 @@
+.rename {
+	height: 100%;
+	display: grid;
+	grid-template-rows: 20% 80%;
+}
+
+.MuiIconButton-label {
+	color: rgb(0, 105, 95);
+}
