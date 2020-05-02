@@ -81,7 +81,12 @@ export default withTheme(props => {
 						</Scrollbars>
 					</Col>
 					<Col xs={12} md={4} xl={4} className="Article-screen-item">
-						<InteractivePicker type={section.interactiveType}/>
+						<Scrollbars style={{
+							height : "100%",
+							width : "100%"
+						}}>
+							<InteractivePicker type={section.interactiveType}/>
+						</Scrollbars>
 					</Col>
 				</Row>
 			</Container>
