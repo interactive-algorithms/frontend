@@ -24,7 +24,7 @@ const getProblem = name => {
 				output : "A 2D array of points [[x1, y1]...[xn, yn]]",
 				testdata : (() => {
 					const res = []
-					for(let i = 0; i < 20; i++){
+					for(let i = 0; i < 1; i++){
 						const n = Math.ceil(Math.random() * 1000);
 						let x = Math.ceil(Math.random() * 2000 - 1000);
 						let y = Math.ceil(Math.random() * 2000 - 1000);
@@ -85,31 +85,30 @@ const executeCode = (code, problem) => {
 				const executionThread = document.createElement("iframe");
 				document.body.appendChild(executionThread)
 				executionThread.contentWindow.run = problem.function;
-				executionThread.contentWindow.run(input, code);
-				executionThread.remove();
-				const timeout = setTimeout(() => {
-					try{
-						const codeResult = problem.function(input, code);
-						didFinish = true;
-						resolve2({
-							correct : JSON.stringify(codeResult) === JSON.stringify(output)
-						})
-					}catch(e){
-						didFinish = true;
-						resolve2({
-							error : e.message
-						})
-					}
-				}, 0)
+				//const timeout = setTimeout(() => {
+				try{
+					const codeResult = executionThread.contentWindow.run(input, code);
+					didFinish = true;
+					resolve2({
+						correct : JSON.stringify(codeResult) === JSON.stringify(output)
+					})
+				}catch(e){
+					didFinish = true;
+					resolve2({
+						error : e.message
+					})
+				}
+				//}, 0)
 				setTimeout(() => {
-					console.log("jwdnjwndjwd")
-					clearTimeout(timeout)
+					//clearTimeout(timeout)
+					executionThread.remove();
+					console.log("TLE", didFinish)
 					if(!didFinish){
 						resolve2({
 							error : "Time limit exceeded"
 						})
 					}
-				}, 100)
+				}, 10)
 			}))
 		}
 		Promise.all(promises).then((res) => {
