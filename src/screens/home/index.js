@@ -19,7 +19,6 @@ export default withTheme(props => {
 		fetchArticleMetadata(dispatch);
 	}, [])
 
-	console.log(props.theme);
 	return (
 		<>
 			<div className="banner" style={{

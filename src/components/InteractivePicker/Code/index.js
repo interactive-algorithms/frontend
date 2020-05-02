@@ -96,7 +96,6 @@ export default props => {
 	const [isExecuting, setIsExecuting] = useState(false);
 
 	const amountOfCorrect = results ? results.reduce((total, result) => total + result.correct, 0) : -1;
-	console.log(isExecuting)
 	return <div style={{
 		textAlign : "center",
 		padding : "2rem",
