@@ -1,32 +1,88 @@
 import React, { useState, useEffect } from "react";
-//import { useDispatch, useSelector } from "react-redux";
-import { idk, updateArray } from "state/SortingAlgorithm";
+import { useDispatch, useSelector } from "react-redux";
+import { idk, updateArray, newSort } from "state/SortingAlgorithm";
 import { SortingAlgorithm, BubbleSort } from "./SA";
 import BarChart from "./barChart";
+import ControlePanel from "./controlPanel";
+import FormLabel from '@material-ui/core/FormLabel';
+import Grid from '@material-ui/core/Grid';
 
-const test = new BubbleSort(10, true);
-test.sort();
-
+import "./index.css";
 
 export default props => {
 
+	//const dispatch = useDispatch();
+	//const SA = useSelector(state => state.sortingAlgorithm);
 
-	console.log(test.animation);
+
+
+
 
 	const [index, setIndex] = useState(0);
+	const [play, setPlay] = useState(false);
+	const [speed, setSpeed] = useState(10);
+	const [size, setSize] = useState(10);
+	const [isUnique, setIsUnique] = useState(true);
+	const [test, setTest] = useState(null);
+	const [genNew, setGenNew] = useState(false);
+
+	useEffect(() => {
+		const bubble = new BubbleSort(10, true);
+		setTest(bubble);
+		bubble.sort();
+	}, []);
+
+	useEffect(() => {
+		const bubble = new BubbleSort(size, isUnique);
+		setTest(bubble);
+		bubble.sort();
+		setIndex(0);
+	}, [size, isUnique, genNew]);
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			setIndex(index => (test.animation.length > index + 1) ? index + 1 : index);
-		}, 1000);
+			if (play) {
+				setIndex(index => (test.animation.length > index + 1) ? index + 1 : index);
+			}
+		}, 1000 - speed);
 		return () => clearInterval(interval);
-	}, []);
+	}, [play, speed, index]);
 
-	console.log(index);
+	const goBack = () => {
+		setPlay(false);
+		if (index !== 0) {
+			setIndex(index - 1);
+		}
+	}
+
+	const goForward = () => {
+		setPlay(false);
+		if (index !== test.animation.length - 1) {
+			setIndex(index + 1);
+		}
+	}
+
+	const goUnique = () => {
+		setPlay(false);
+		setIsUnique(!isUnique)
+	}
+
+	const changeSize = (event, value) => {
+		setSize(value);
+	}
+
+	const changeSpeed = (event, value) => {
+		setSpeed(value);
+	}
 
 	return (
 		<>
-			<BarChart array={test.animation[index].newArray} change={test.animation[index].change} />
+			{(test !== null) ? <>
+				<div className="rename">
+					<ControlePanel onPlay={() => setPlay(!play)} play={play} onBack={goBack} onForward={goForward} isUnique={isUnique} onUnique={goUnique} size={size} setSize={changeSize} speed={speed} setSpeed={changeSpeed} genNew={() => setGenNew(!genNew)} />
+					<BarChart array={test.animation[index].newArray} change={test.animation[index].change} />
+				</div>
+			</> : ""}
 		</>
 	);
 

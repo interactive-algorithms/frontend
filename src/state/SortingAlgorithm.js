@@ -7,6 +7,10 @@ export default (state = [], action) => {
 			return state + action.payload;
 		case "UPDATE_ARRAY":
 			return action.payload;
+		case "NEW_OBJECT":
+			return action.payload;
+		case "INCREMENT":
+			return state.payload;
 		default:
 			return state;
 	}
@@ -24,4 +28,12 @@ export const updateArray = (dispatch, array) => {
 		type: "UPDATE_ARRAY",
 		payload: array
 	});
+}
+
+export const newSort = (dispatch, object) => {
+	dispatch({
+		type: "NEW_OBJECT",
+		payload: object
+	});
+
 }

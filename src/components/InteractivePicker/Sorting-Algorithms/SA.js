@@ -8,6 +8,7 @@ export default class SortingAlgorithm {
 		this.length = length;
 		this.isUnique = isUnique
 		this.animation = [];
+		this.index = 0;
 		this.setup();
 	}
 
@@ -137,9 +138,34 @@ export class BubbleSort extends SortingAlgorithm {
 					[array[i], array[i + 1]] = [array[i + 1], array[i]]
 					swapped = true;
 				}
+				this.genNextAnimation(
+					[...array],
+					{
+						compair: [],
+						isSorted: []
+					});
+
+				// Addes the check animation so the last to "bars" is in order
+				//if (n === 1) {
+				//	this.genNextAnimation(
+				//		[...array],
+				//		{
+				//			compair: [i, i + 1],
+				//			isSorted: []
+				//		});
+
+				//}
 			}
 			n--;
 		} while (swapped);
+
+		// Add the last animation without a compare
+		this.genNextAnimation(
+			[...array],
+			{
+				compair: [],
+				isSorted: []
+			});
 		//console.log(this.animation);;
 
 	}
