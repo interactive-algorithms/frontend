@@ -28,8 +28,11 @@ export default props => {
 
 	useEffect(() => {
 		const interval = setInterval(() => {
-			if (play) {
-				setIndex(index => (test.animation.length > index + 1) ? index + 1 : index);
+			if(!test) return;
+			if(test.animation.length <= index + 1){
+				setPlay(false);
+			}else if (play) {
+				setIndex(index => index + 1);
 			}
 		}, 1000 - speed);
 		return () => clearInterval(interval);
