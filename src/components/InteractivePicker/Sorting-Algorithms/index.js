@@ -80,7 +80,7 @@ export default props => {
 			{(test !== null) ? <>
 				<div className="rename">
 					<ControlePanel onPlay={() => setPlay(!play)} play={play} onBack={goBack} onForward={goForward} isUnique={isUnique} onUnique={goUnique} size={size} setSize={changeSize} speed={speed} setSpeed={changeSpeed} genNew={() => setGenNew(!genNew)} />
-					<BarChart array={test.animation[index].newArray} change={test.animation[index].change} />
+					<BarChart array={test.animation[index].newArray} change={test.animation[index].change} speed={speed} />
 				</div>
 			</> : ""}
 		</>

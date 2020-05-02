@@ -37,6 +37,7 @@ export default props => {
 					}
 
 					return <Bar 
+						speed={props.speed}
 						key={idx}
 						color={color}
 						value={value}
