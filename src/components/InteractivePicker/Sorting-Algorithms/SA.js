@@ -138,6 +138,12 @@ export class BubbleSort extends SortingAlgorithm {
 					[array[i], array[i + 1]] = [array[i + 1], array[i]]
 					swapped = true;
 				}
+				this.genNextAnimation(
+					[...array],
+					{
+						compair: [],
+						isSorted: []
+					});
 
 				// Addes the check animation so the last to "bars" is in order
 				//if (n === 1) {

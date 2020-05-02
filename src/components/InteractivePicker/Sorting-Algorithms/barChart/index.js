@@ -5,20 +5,20 @@ import { useDispatch, useSelector } from "react-redux";
 let SA;
 
 export default props => {
-	const dispatch = useDispatch();
-	SA = useSelector(state => ({...state.sortingAlgorithm[0]}));
+	//const dispatch = useDispatch();
+	//SA = useSelector(state => ({ ...state.sortingAlgorithm[0] }));
 
 
 	const [animation, setAnimation] = useState();
 	const [index, setIndex] = useState();
 
-	console.log(SA.array);
+	//console.log(SA.array);
 
 	//useEffect(() => {
 	//	setAnimation(animation => animation = SA.animation);
 	//}, []);
 
-		//console.log(animation);
+	//console.log(animation);
 
 	return (
 		<>
@@ -30,7 +30,12 @@ export default props => {
 			}}>
 				{props.array.map((value, idx) => {
 					const height = value / props.array.length;
-					const color = (props.change.compair.includes(idx) ? "blue" : "red")
+					let color = "red";
+					if (props.change.compair.includes(idx)) {
+						color = "blue";
+					} else if (props.change.isSorted.includes(idx)) {
+						color = "orange";
+					}
 
 					return <Bar index={idx} color={color} height={height} value={value} />
 				})}
