@@ -11,13 +11,6 @@ import "./index.css";
 
 export default props => {
 
-	//const dispatch = useDispatch();
-	//const SA = useSelector(state => state.sortingAlgorithm);
-
-
-
-
-
 	const [index, setIndex] = useState(0);
 	const [play, setPlay] = useState(false);
 	const [speed, setSpeed] = useState(10);
@@ -25,6 +18,8 @@ export default props => {
 	const [isUnique, setIsUnique] = useState(true);
 	const [test, setTest] = useState(null);
 	const [genNew, setGenNew] = useState(false);
+
+	console.log(test)
 
 	useEffect(() => {
 		const bubble = new BubbleSort(10, true);

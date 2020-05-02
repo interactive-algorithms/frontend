@@ -19,7 +19,16 @@ export default props => {
 	//}, []);
 
 	//console.log(animation);
-
+	//console.log(props.array, props.change)
+	const array = props.array.map((value, idx) => {
+		return {
+			...value,
+			idx
+		}
+	})
+	array.sort((v1, v2) => {
+		return v1.id - v2.id;
+	})
 	return (
 		<>
 			<div style={{
@@ -27,19 +36,19 @@ export default props => {
 				height: "100%",
 				position : "relative"
 			}}>
-				{props.array.map((value, idx) => {
-					const height = value / props.array.length;
+				{array.map((value) => {
+					const height = value.value / props.array.length;
 					let color = "red";
+					const idx = value.idx;
 					if (props.change.compair.includes(idx)) {
 						color = "blue";
 					} else if (props.change.isSorted.includes(idx)) {
 						color = "orange";
 					}
-
 					return <Bar 
-						key={idx}
+						key={value.id}
 						color={color}
-						value={value}
+						value={value.value}
 						style={{
 							height: `${height * 100}%`,
 							width: `${100 / props.array.length}%`,

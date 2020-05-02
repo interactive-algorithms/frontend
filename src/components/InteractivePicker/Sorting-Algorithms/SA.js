@@ -37,7 +37,10 @@ export default class SortingAlgorithm {
 	// Random array where numbers can repeat
 	_randomArray() {
 		return [...new Array(this.length)]
-			.map(() => Math.round(Math.random() * this.length));
+			.map((_, idx) => ({
+				value : Math.round(Math.random() * this.length),
+				id : idx
+			}));
 	}
 
 	// Random array where every number is unique
@@ -45,7 +48,10 @@ export default class SortingAlgorithm {
 		// Generate array with every number from 1 to max length
 		let array = [];
 		for (let i = 1; i <= this.length; i++) {
-			array[i - 1] = i;
+			array[i - 1] = {
+				value : i,
+				id : i
+			};
 		}
 
 		// Shuffle array
@@ -134,7 +140,7 @@ export class BubbleSort extends SortingAlgorithm {
 						compair: [i, i + 1],
 						isSorted: []
 					});
-				if (array[i] > array[i + 1]) {
+				if (array[i].value > array[i + 1].value) {
 					[array[i], array[i + 1]] = [array[i + 1], array[i]]
 					swapped = true;
 				}
