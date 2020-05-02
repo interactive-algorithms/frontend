@@ -46,7 +46,7 @@ export default props => {
 			}
 		}, 1000 - speed);
 		return () => clearInterval(interval);
-	}, [play, speed]);
+	}, [play, speed, index]);
 
 	const goBack = () => {
 		setPlay(false);
