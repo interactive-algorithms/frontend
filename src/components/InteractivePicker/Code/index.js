@@ -1,16 +1,15 @@
-import React, {useState} from "react";
+import React, {useState, useEffect} from "react";
 
 import AceEditor from "react-ace";
  
 import "ace-builds/src-noconflict/mode-javascript";
 import "ace-builds/src-noconflict/theme-tomorrow";
 
-import Button from '@material-ui/core/Button';
-
-import {Table, Spinner} from 'react-bootstrap'
+import {Table, Spinner, Badge} from 'react-bootstrap'
 
 import { Scrollbars } from "react-custom-scrollbars";
 
+import Button from '@material-ui/core/Button';
 import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 
@@ -78,6 +77,7 @@ const executeCode = (code, problem) => {
 	return new Promise((resolve, reject) => {
 		const promises = []
 		for(let i = 0; i < problem.testdata.length; i++){
+			const idx = i;
 			const input = problem.testdata[i].input;
 			const output = problem.testdata[i].output;
 			promises.push(new Promise((resolve2, reject2) => {
@@ -90,12 +90,15 @@ const executeCode = (code, problem) => {
 						const codeResult = problem.function(input, code);
 						didFinish = true;
 						resolve2({
-							correct : JSON.stringify(codeResult) === JSON.stringify(output)
+							correct : JSON.stringify(codeResult) === JSON.stringify(output),
+							output : codeResult,
+							idx
 						})
 					}catch(e){
 						didFinish = true;
 						resolve2({
-							error : e.message
+							error : e.message,
+							idx
 						})
 					}
 				}, false);
@@ -104,28 +107,36 @@ const executeCode = (code, problem) => {
 					executionThread.remove();
 					if(!didFinish){
 						resolve2({
-							error : "Time limit exceeded"
+							error : "Time limit exceeded",
+							idx
 						})
 					}
 				}, 1000)
 			}))
 		}
 		Promise.all(promises).then((res) => {
-			console.log(res)
+			res.sort((a,b) => a.idx - b.idx)
 			resolve(res)
 		})
 	})
 }
 
 export default props => {
-	const problem = getProblem(props.problem)
-
+	const [problem, setProblem] = useState(null);
+	useEffect(() => {
+		setProblem(getProblem(props.problem))
+	},[])
 	const [code, setCode] = useState("");
 	const [results, setResults] = useState(null);
 	const [isExecuting, setIsExecuting] = useState(false);
 
 	const [activeErrorMessageElement, setActiveErrorMessageElement] = useState(null);
 	const [activeError, setActiveError] = useState("");
+
+	const [activeWrongAnswerElement, setActiveWrongAnswerElement] = useState(null);
+	const [activeWrongAnswerData, setActiveWrongAnswerData] = useState("");
+
+	if(!problem) return <></>
 
 	const amountOfCorrect = results ? results.reduce((total, result) => total + result.correct, 0) : -1;
 
@@ -201,7 +212,9 @@ export default props => {
 			borderRadius : "1rem",
 			marginTop : "1rem"
 		}}>
-			<p>
+			<p style={{
+				color : "black"
+			}}>
 				Code execution results: {amountOfCorrect || 0} / {results.length}
 			</p>
 		</div>}
@@ -210,7 +223,8 @@ export default props => {
 		}}>
 			<Table striped bordered hover size="sm" responsive="sm" style={{
 				height : "20%",
-				position : "relative"
+				position : "relative",
+				color : "black"
 			}}>
 				<thead>
 					<tr>
@@ -224,19 +238,28 @@ export default props => {
 				{
 					results.map((result, idx) => <tr key={idx} style={{
 						backgroundColor : result.error ? "rgb(255, 115, 107)" : testColor,
-						cursor : result.error ? "pointer" : "unset"
 					}}>
 						<td>Test case {idx + 1}</td>
-						<td 
-							onClick={e => {
+						<td style={{
+							display : "flex",
+							justifyContent: "space-evenly"
+						}}>
+							<p style={{margin : "0 auto"}}>{result.error ? "Error" : (result.correct ? "Accepted" : "Wrong Answer")}</p>
+							<Button variant="contained" color="primary" onClick={e => {
 								if(result.error){
 									e.stopPropagation();
 									setActiveErrorMessageElement(e.currentTarget)
 									setActiveError(result.error)
+								}else{
+									e.stopPropagation();
+									setActiveWrongAnswerElement(e.currentTarget)
+									setActiveWrongAnswerData({
+										input : problem.testdata[idx].input,
+										correctAnswer : problem.testdata[idx].output,
+										yourAnswer : result.output
+									})
 								}
-							}}
-						>
-							{result.error ? "Error" : (result.correct ? "Accepted" : "Wrong Answer")}
+							}}>View</Button>
 						</td>
 					</tr>)
 				}
@@ -274,6 +297,49 @@ export default props => {
 			}}>
 				<strong>Error</strong><br/>
 				<Typography>{activeError}</Typography>
+			</div>
+		</Popover>
+		<Popover
+			open={Boolean(activeWrongAnswerElement)}
+			anchorEl={activeWrongAnswerElement}
+			onClose={() => setActiveWrongAnswerElement(null)}
+			anchorOrigin={{
+				vertical: 'bottom',
+				horizontal: 'center',
+			}}
+			transformOrigin={{
+				vertical: 'top',
+				horizontal: 'center',
+			}}
+		>
+			<div style={{
+				padding : "1rem"
+			}}>
+				<Table bordered hover style={{
+					height : "80vh",
+					position : "relative"
+				}}>
+					<thead>
+						<tr>
+							<th style={{width : 1/6*100 + "vw"}}><strong>Input</strong></th>
+							<th style={{width : 1/6*100 + "vw"}}><strong>Correct Answer</strong></th>
+							<th style={{width : 1/6*100 + "vw"}}><strong>Your Answer</strong></th>
+						</tr>
+					</thead>
+					<tbody>	
+						<tr>
+							<td>
+								<pre>{JSON.stringify(activeWrongAnswerData.input, undefined, 2)}</pre>
+							</td>
+							<td>
+								<pre>{JSON.stringify(activeWrongAnswerData.correctAnswer, undefined, 2)}</pre>
+							</td>
+							<td>
+								<pre>{JSON.stringify(activeWrongAnswerData.yourAnswer, undefined, 2)}</pre>
+							</td>
+						</tr>
+					</tbody>
+				</Table>
 			</div>
 		</Popover>
 	</div>;
