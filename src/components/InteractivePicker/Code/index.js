@@ -48,7 +48,17 @@ const getProblem = name => {
 					let x = input.x;
 					let y = input.y;
 					return eval(`${code}()`)
+				},
+				/*
+				const res = []
+				while(n--){
+					res.push([++x,++y])
 				}
+				return res
+
+				// TLE
+				for(let i = 0; i < 1000000000; i++);
+				 */
 			}
 		case "bubblesort":
 			return {
