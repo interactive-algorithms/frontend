@@ -64,7 +64,7 @@ export default withTheme(props => {
 							<ArticleMenu article={article} activeSectionID={sectionID}/>
 						</Scrollbars>
 					</Col>
-					<Col xs={12} md={6} xl={6} className="Article-screen-item" style={{
+					<Col xs={12} md={section.interactiveType == "NONE" ? 10 : 6} xl={section.interactiveType == "NONE" ? 10 : 6} className="Article-screen-item" style={{
 						backgroundColor : props.theme.palette.secondary.light,
 						color : props.theme.palette.grey[800],
 						padding : "0.1rem"
@@ -80,14 +80,14 @@ export default withTheme(props => {
 							</div>
 						</Scrollbars>
 					</Col>
-					<Col xs={12} md={4} xl={4} className="Article-screen-item">
+					{section.interactiveType != "NONE" && <Col xs={0} md={4} xl={4} className="Article-screen-item">
 						<Scrollbars style={{
 							height : "100%",
 							width : "100%"
 						}}>
 							<InteractivePicker type={section.interactiveType}/>
 						</Scrollbars>
-					</Col>
+					</Col>}
 				</Row>
 			</Container>
 			{showChat && <div style={{
