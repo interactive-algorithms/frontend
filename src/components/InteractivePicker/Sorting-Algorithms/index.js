@@ -20,9 +20,16 @@ export default props => {
 	const [genNew, setGenNew] = useState(false);
 
 	useEffect(() => {
-		const bubble = new BubbleSort(size, isUnique);
-		setTest(bubble);
-		bubble.sort();
+		let sorter;
+		switch (props.type) {
+			case "bubble":
+				sorter = new BubbleSort(size, isUnique);
+				break;
+			default:
+				break;
+		}
+		setTest(sorter);
+		sorter.sort();
 		setIndex(0);
 	}, [size, isUnique, genNew]);
 

@@ -2,7 +2,7 @@ import React from "react";
 
 // types
 import Code from "./Code";
-import Idk from "./Sorting-Algorithms";
+import Sort from "./Sorting-Algorithms";
 //import Idk from "./test";
 
 export default props => {
@@ -10,8 +10,10 @@ export default props => {
 	switch (type) {
 	case "CODE-ALGORITHMICWALK":
 		return <Code problem={"algorithmicwalk"} />;
-	case "SORTING-ALGORITHMS":
-		return <Idk />;
+	case "CODE-BUBBLESORT":
+		return <Code problem={"bubblesort"} />;
+	case "SORTING-BUBBLE":
+		return <Sort type={"bubble"}/>;
 	default:
 		return "";
 	}
