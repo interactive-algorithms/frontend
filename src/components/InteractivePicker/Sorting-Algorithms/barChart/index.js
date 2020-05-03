@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from "react";
 import Bar from "../bar";
 import { useDispatch, useSelector } from "react-redux";
+import { withTheme } from '@material-ui/core/styles';
 
 let SA;
 
-export default props => {
+export default withTheme(props => {
 	//const dispatch = useDispatch();
 	//SA = useSelector(state => ({ ...state.sortingAlgorithm[0] }));
 
@@ -38,11 +39,14 @@ export default props => {
 			}}>
 				{array.map((value) => {
 					const height = value.value / props.array.length;
-					let color = "red";
+					//let color = "red";
+					let color = props.theme.palette.primary.main;
 					const idx = value.idx;
 					if (props.change.compair.includes(idx)) {
+						//color = "blue";
 						color = "blue";
 					} else if (props.change.isSorted.includes(value.id)) {
+						//color = "green";
 						color = "green";
 					}
 					return <Bar 
@@ -61,4 +65,4 @@ export default props => {
 			</div>
 		</>
 	);
-};
+});

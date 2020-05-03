@@ -7,7 +7,6 @@ import "./index.css";
 
 import ArticleText from "../../components/ArticleText";
 import {fetchArticle} from 'state/article'
-import Button from '@material-ui/core/Button';
 
 import Fab from '@material-ui/core/Fab';
 import InsertCommentIcon from '@material-ui/icons/InsertComment';
