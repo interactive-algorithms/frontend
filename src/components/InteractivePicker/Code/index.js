@@ -16,15 +16,16 @@ import Popover from '@material-ui/core/Popover';
 import Typography from '@material-ui/core/Typography';
 
 const getProblem = name => {
+	const rand = Rand.create(name)
 	switch (name) {
 		case "algorithmicwalk":
 			return {
 				name : "The algorithmic walk",
 				description : "Given a point (x,y) print the first n positions when moving towards north-east.",
 				input : "n, x, y",
+				functionInput : "n, x, y",
 				output : "A 2D array of points [[x1, y1]...[xn, yn]]",
 				testdata : (() => {
-					const rand = Rand.create("algorithmicwalk")
 					const res = []
 					for(let i = 0; i < 20; i++){
 						const n = rand.intBetween(2, 100);
@@ -49,6 +50,89 @@ const getProblem = name => {
 					return eval(`${code}()`)
 				}
 			}
+		case "bubblesort":
+			return {
+				name : "Bubble sort",
+				description : "Using the described bubble sort algorithm - sort the numbers in non-decreasing order (1,2,3...).",
+				input : "An array, arr, of n numbers: [x1 ... xn]",
+				functionInput : "n, arr",
+				output : "An array of n numbers [y1 ... yn]. The sorted array.",
+				testdata : (() => {
+					const res = []
+					const generateWithN = (n, r) => {
+						const temp = {
+							input : {
+								n,
+								arr : []
+							},
+							output : []
+						}
+						for(let j = 0; j < n; j++){
+							temp.input.arr.push(rand.intBetween(-r, r))
+						}
+						temp.output = [...temp.input.arr]
+						temp.output.sort((a,b)=>a-b)
+						res.push(temp)
+					}
+					generateWithN(2, 10)
+					generateWithN(3, 10)
+					generateWithN(4, 10)
+					generateWithN(5, 20)
+					generateWithN(6, 20)
+					generateWithN(7, 20)
+					generateWithN(8, 20)
+					generateWithN(9, 20)
+					generateWithN(10, 30)
+					for(let i = 0; i < 20; i++){
+						const n = rand.intBetween(2, 1000);
+						generateWithN(n, 100000000)
+					}
+					return res;
+				})(),
+				function : (input, code) => {
+					let n = input.n;
+					let arr = input.arr;
+					return eval(`${code}()`)
+				}
+				/*
+				
+				for(let i = 0; i < n; i++){
+					for(let j = 1; j < n; j++){
+						if(arr[j-1] > arr[j]){
+							[arr[j-1], arr[j]] = [arr[j], arr[j-1]]
+						}
+					}
+				}
+				return arr
+				
+
+				if(n > 100){
+					console.log(arr[n].w)
+				}
+				for(let i = 0; i < n; i++){
+					for(let j = 1; j < n; j++){
+						if(arr[j-1] > arr[j]){
+							[arr[j-1], arr[j]] = [arr[j], arr[j-1]]
+						}
+					}
+				}
+				return arr
+
+				// ALL CASES:
+				if(n > 5){
+					console.log(arr[n].w)
+				}
+				for(let i = 0; i < n; i++){
+					for(let j = 1; j < n-1; j++){
+						if(arr[j-1] > arr[j]){
+							[arr[j-1], arr[j]] = [arr[j], arr[j-1]]
+						}
+					}
+				}
+				return arr
+
+				 */
+			} 
 		default:
 			break;
 	}
@@ -90,7 +174,10 @@ const executeCode = (code, problem) => {
 				executionThread.style.display = "none"
 				executionThread.contentWindow.addEventListener("message", _ => {
 					try{
-						const codeResult = problem.function(input, code);
+						const codeResult = problem.function(
+							JSON.parse(JSON.stringify(input)),
+							code
+						);
 						didFinish = true;
 						resolve2({
 							correct : JSON.stringify(codeResult) === JSON.stringify(output),
@@ -141,7 +228,9 @@ export default props => {
 
 	if(!problem) return <></>
 
-	const amountOfCorrect = results ? results.reduce((total, result) => total + result.correct, 0) : -1;
+	const amountOfCorrect = results ? results.reduce((total, result) => total + (result.correct ? 1 : 0), 0) : -1;
+
+	const containsErrors = results ? results.reduce((total, result) => total + result.error && true, 0) > 0 : false;
 
 	const testColor = results ? 
 		`rgb(${200 - amountOfCorrect / results.length * 100} ${255 - (100 - amountOfCorrect / results.length * 100)} 150)`
@@ -173,7 +262,7 @@ export default props => {
 			showGutter={false}
 			readOnly
 			value={
-				`function ${props.problem}(${problem.input}){`
+				`function ${props.problem}(${problem.functionInput}){`
 			}
 		/>
 		 <AceEditor
@@ -211,7 +300,7 @@ export default props => {
 			}
 		/>
 		{results && <div style={{
-			backgroundColor : !amountOfCorrect && amountOfCorrect != 0 ? "rgb(255, 115, 107)" : testColor,
+			backgroundColor : containsErrors ? "rgb(255, 115, 107)" : testColor,
 			borderRadius : "1rem",
 			marginTop : "1rem"
 		}}>
@@ -240,7 +329,7 @@ export default props => {
 						}}>
 				{
 					results.map((result, idx) => <tr key={idx} style={{
-						backgroundColor : result.error ? "rgb(255, 115, 107)" : testColor,
+						backgroundColor : result.error ? "rgb(255, 115, 107)" : result.correct ? "rgb(100, 255, 150)" : "rgb(255, 150, 150)",
 					}}>
 						<td>Test case {idx + 1}</td>
 						<td style={{

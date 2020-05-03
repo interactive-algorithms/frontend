@@ -10,6 +10,8 @@ export default props => {
 	switch (type) {
 	case "CODE-ALGORITHMICWALK":
 		return <Code problem={"algorithmicwalk"} />;
+	case "CODE-BUBBLESORT":
+		return <Code problem={"bubblesort"} />;
 	case "SORTING-BUBBLE":
 		return <Sort type={"bubble"}/>;
 	default:
