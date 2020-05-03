@@ -41,7 +41,7 @@ export default withTheme(props => {
 		} else if (item.type === "ul") {
 			return (
 				<ul key={index}>
-					{item.content.map((li, idx) => {
+					{JSON.parse(item.content).map((li, idx) => {
 						return <li key={idx}>{li}</li>;
 					})}
 				</ul>
@@ -49,7 +49,7 @@ export default withTheme(props => {
 		} else if (item.type === "ol") {
 			return (
 				<ol key={index}>
-					{item.content.map((li, idx) => {
+					{JSON.parse(item.content).map((li, idx) => {
 						return <li key={idx}>{li}</li>;
 					})}
 				</ol>
