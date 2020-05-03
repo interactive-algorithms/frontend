@@ -316,10 +316,11 @@ export default props => {
 			}}
 		>
 			<div style={{
-				padding : "1rem"
+				padding : "1rem",
+				height : "80vh",
+				overflowY : "scroll"
 			}}>
 				<Table bordered hover style={{
-					height : "80vh",
 					position : "relative"
 				}}>
 					<thead>
