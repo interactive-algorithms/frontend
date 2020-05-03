@@ -1,5 +1,7 @@
 import React, {useState, useEffect} from "react";
 
+import Rand from 'random-seed'
+
 import AceEditor from "react-ace";
  
 import "ace-builds/src-noconflict/mode-javascript";
@@ -22,11 +24,12 @@ const getProblem = name => {
 				input : "n, x, y",
 				output : "A 2D array of points [[x1, y1]...[xn, yn]]",
 				testdata : (() => {
+					const rand = Rand.create("algorithmicwalk")
 					const res = []
 					for(let i = 0; i < 20; i++){
-						const n = Math.ceil(Math.random() * 1000);
-						let x = Math.ceil(Math.random() * 2000 - 1000);
-						let y = Math.ceil(Math.random() * 2000 - 1000);
+						const n = rand.intBetween(2, 100);
+						let x = rand.intBetween(-1000, 1000);
+						let y = rand.intBetween(-1000, 1000);
 						res.push({
 							input : {n,x,y},
 							output : []

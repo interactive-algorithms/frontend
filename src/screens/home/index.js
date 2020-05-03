@@ -19,17 +19,19 @@ export default withTheme(props => {
 		fetchArticleMetadata(dispatch);
 	}, [])
 
-	console.log(props.theme);
 	return (
 		<>
-			<div className="banner">
+			<div className="banner" style={{
+				backgroundColor: props.theme.palette.secondary.main
+				}}>
 				<Container fixed className="container">
 					<h1 class="display-4">Welcome to Interactive Algorithms</h1>
 					<p class="lead">This is a website create to make it a lot easier to learn </p>
 				</Container>
 
 			</div>
-			<Container className="p-5">
+			<h2 className="centerH">Some of our articles</h2>
+			<Container className="p-2">
 				<Row className="row">
 					{articleList.map((article, idx) =>
 						<Col lg={4} md={6} className="mb-4" >

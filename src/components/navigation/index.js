@@ -13,7 +13,6 @@ export default withTheme(props => {
 	const history = useHistory();
 	const user = useSelector(state => state.user);
 	const dispatch = useDispatch();
-	console.log("theme ",props.theme);
 	return (
 		<Navbar bg="dark" variant="dark" expand="md" style={{
 			position : "fixed",
